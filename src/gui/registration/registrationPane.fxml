@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="353.0" prefWidth="505.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.registration.RegistrationController">
+   <TextField fx:id="TF_login" layoutX="20.0" layoutY="75.0" prefHeight="25.0" prefWidth="203.0" />
+   <TextField fx:id="TF_passwordRepeat" layoutX="20.0" layoutY="200.0" prefHeight="25.0" prefWidth="203.0" visible="false" />
+   <TextField fx:id="TF_password" layoutX="20.0" layoutY="150.0" prefHeight="25.0" prefWidth="203.0" visible="false" />
+   <Button layoutX="289.0" layoutY="311.0" mnemonicParsing="false" onAction="#registration" prefHeight="25.0" prefWidth="203.0" text="Реєстрація" />
+   <Label layoutX="20.0" layoutY="58.0" text="Логін" />
+   <Button fx:id="Button_logOut" layoutX="232.0" layoutY="14.0" mnemonicParsing="false" onAction="#logOut" prefHeight="25.0" prefWidth="113.0" text="Вихід з акаунту" />
+   <Button layoutX="122.0" layoutY="14.0" mnemonicParsing="false" onAction="#exit" text="Вихід з додатку" />
+   <Button layoutX="24.0" layoutY="14.0" mnemonicParsing="false" onAction="#returnBack" text="Повернутися" />
+   <Label layoutX="20.0" layoutY="132.0" text="Пароль" />
+   <Label layoutX="20.0" layoutY="182.0" text="Повторити пароль" />
+   <TextField fx:id="TF_name" layoutX="290.0" layoutY="148.0" prefHeight="25.0" prefWidth="203.0" />
+   <TextField fx:id="TF_patronymic" layoutX="290.0" layoutY="248.0" prefHeight="25.0" prefWidth="203.0" />
+   <TextField fx:id="TF_surname" layoutX="290.0" layoutY="198.0" prefHeight="25.0" prefWidth="203.0" />
+   <Label layoutX="290.0" layoutY="131.0" text="Ім'я" />
+   <Label layoutX="290.0" layoutY="181.0" text="Прізвище" />
+   <Label layoutX="290.0" layoutY="231.0" text="По-батькові" />
+   <Label fx:id="label_passwordsNotMatch" layoutX="20.0" layoutY="224.0" text="Паролі не збігаються" textFill="RED" visible="false">
+      <font>
+         <Font name="System Bold" size="12.0" />
+      </font>
+   </Label>
+   <Label fx:id="label_loginOccupied" layoutX="22.0" layoutY="99.0" text="Логін вже зайнято" textFill="RED" visible="false">
+      <font>
+         <Font name="System Bold" size="12.0" />
+      </font>
+   </Label>
+   <Label layoutX="290.0" layoutY="107.0" text="Персональні дані" />
+   <CheckBox fx:id="check_showPassword" layoutX="24.0" layoutY="253.0" mnemonicParsing="false" onAction="#showPassword" text="Показати пароль" />
+   <PasswordField fx:id="PF_password" layoutX="20.0" layoutY="150.0" prefHeight="25.0" prefWidth="203.0" />
+   <PasswordField fx:id="PF_passwordRepeat" layoutX="20.0" layoutY="200.0" prefHeight="25.0" prefWidth="203.0" />
+   <ChoiceBox fx:id="ChB_userType" layoutX="290.0" layoutY="71.0" prefHeight="25.0" prefWidth="203.0" />
+   <Label layoutX="290.0" layoutY="54.0" text="Тип користувача" />
+</AnchorPane>
