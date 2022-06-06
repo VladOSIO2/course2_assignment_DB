@@ -20,7 +20,9 @@ public class SceneStarter {
             stage.show();
             stage.setTitle(sceneTitle);
             stage.setResizable(false);
-            ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
+            if (actionEvent != null) {
+                ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
+            }
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -33,5 +35,19 @@ public class SceneStarter {
 
     public static void startSceneRegistration (ActionEvent actionEvent) {
         startScene(actionEvent, "/gui/registration/registrationPane.fxml", "Реєстрація");
+    }
+
+    public static void startSceneLogin (ActionEvent actionEvent) {
+        startScene(actionEvent, "/gui/login/loginPane.fxml", "Авторизація");
+    }
+
+    public static void startSceneLogin () {
+        startScene(null, "/gui/login/loginPane.fxml", "Авторизація");
+    }
+
+    public static void exit(ActionEvent actionEvent) {
+        if (actionEvent != null) {
+            ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
+        }
     }
 }

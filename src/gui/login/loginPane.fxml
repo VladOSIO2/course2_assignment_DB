@@ -14,7 +14,7 @@
    <Label layoutX="150.0" layoutY="68.0" text="Логін" />
    <Label layoutX="150.0" layoutY="121.0" text="Пароль" />
    <PasswordField fx:id="PF_password" layoutX="150.0" layoutY="138.0" prefHeight="25.0" prefWidth="219.0" />
-   <Button layoutX="59.0" layoutY="196.0" mnemonicParsing="false" onAction="#registration" text="Реєстрація" />
+   <Button layoutX="59.0" layoutY="196.0" mnemonicParsing="false" onAction="#getRegistrationScene" text="Реєстрація" />
    <CheckBox layoutX="150.0" layoutY="169.0" mnemonicParsing="false" fx:id="check_showPassword" onAction="#showPassword" text="Показати пароль" />
    <TextField fx:id="TF_password" layoutX="150.0" layoutY="138.0" prefHeight="25.0" prefWidth="219.0" visible="false" />
 </Pane>

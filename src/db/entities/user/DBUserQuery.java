@@ -28,7 +28,7 @@ public class DBUserQuery {
         return hasLogin;
     }
 
-    public void insertUser(
+    public static void insertUser(
             String name, String surname, String patronymic,
             String login, String passwordEncrypted,
             DBUserType type) throws SQLException {

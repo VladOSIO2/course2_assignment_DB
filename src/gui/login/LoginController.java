@@ -33,10 +33,13 @@ public class LoginController {
         }
     }
 
-    public void registration() {
+    @FXML
+    private void getRegistrationScene(ActionEvent actionEvent) {
+        SceneStarter.startSceneRegistration(actionEvent);
     }
 
-    public void showPassword() {
+    @FXML
+    private void showPassword() {
         boolean show = check_showPassword.isSelected();
         TF_password.setVisible(show);
         PF_password.setVisible(!show);
