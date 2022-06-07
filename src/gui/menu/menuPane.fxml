@@ -2,12 +2,16 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.menu.MenuController">
-   <children>
-      <Button layoutX="14.0" layoutY="92.0" mnemonicParsing="false" onAction="#getRegistrationScene" prefHeight="25.0" prefWidth="190.0" text="Зареєструвати користувача" />
-      <Button layoutX="134.0" layoutY="14.0" mnemonicParsing="false" onAction="#logOut" prefHeight="25.0" prefWidth="113.0" text="Вихід з акаунту" />
-      <Button layoutX="24.0" layoutY="14.0" mnemonicParsing="false" onAction="#exit" text="Вихід з додатку" />
-      <Button fx:id="button_createQuestion" layoutX="215.0" layoutY="92.0" mnemonicParsing="false" onAction="#createQuestion" prefHeight="25.0" prefWidth="177.0" text="Створити питання" />
-   </children>
+   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="GRAY" height="34.0" width="600.0" />
+   <Button layoutX="14.0" layoutY="53.0" mnemonicParsing="false" onAction="#getRegistrationScene" prefHeight="25.0" prefWidth="177.0" text="Зареєструвати користувача" />
+   <Button layoutX="232.0" layoutY="2.0" mnemonicParsing="false" onAction="#logOut" prefHeight="25.0" prefWidth="113.0" text="Вихід з акаунту" />
+   <Button layoutX="121.0" layoutY="2.0" mnemonicParsing="false" onAction="#exit" text="Вихід з додатку" />
+   <Button fx:id="button_questionManager" layoutX="14.0" layoutY="148.0" mnemonicParsing="false" onAction="#getQuestionManagerScene" prefHeight="25.0" prefWidth="177.0" text="Менеджер питань" />
+   <Button fx:id="button_quizStats" layoutX="14.0" layoutY="175.0" mnemonicParsing="false" onAction="#getQuizStats" prefHeight="25.0" prefWidth="177.0" text="Статистика тестування" />
+   <Button layoutX="14.0" layoutY="82.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="177.0" text="Пройти тестування" />
+   <Button fx:id="button_logInfo" layoutX="14.0" layoutY="237.0" mnemonicParsing="false" onAction="#getLogInfo" prefHeight="25.0" prefWidth="177.0" text="Лог використання програми" />
+   <Button fx:id="button_generalStats" layoutX="14.0" layoutY="266.0" mnemonicParsing="false" onAction="#getGeneralStats" prefHeight="25.0" prefWidth="177.0" text="Загальна статистика" />
 </Pane>

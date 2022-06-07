@@ -1,10 +1,10 @@
-package db;
+package db.entities.user;
 
-public enum DBUserType {
+public enum UserType {
     ADMIN(1), AUTHOR(2), RESPONDER(3);
     private final int id;
 
-    DBUserType(int id) {
+    UserType(int id) {
         this.id = id;
     }
 

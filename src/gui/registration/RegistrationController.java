@@ -1,7 +1,7 @@
 package gui.registration;
 
-import db.DBUserType;
-import db.entities.user.DBUserQuery;
+import db.entities.user.UserType;
+import db.entities.user.UserQuery;
 import gui.SceneStarter;
 import gui.login.DBSession;
 import javafx.collections.FXCollections;
@@ -42,11 +42,11 @@ public class RegistrationController {
 
         //user type choiceBox configuration
         ObservableList<String> userTypes = FXCollections.observableArrayList();
-        userTypes.add(DBUserType.RESPONDER.name());
-        chB_userType.setValue(DBUserType.RESPONDER.name());
+        userTypes.add(UserType.RESPONDER.name());
+        chB_userType.setValue(UserType.RESPONDER.name());
         if (DBSession.getType() != null
-                && DBSession.getType().equals(DBUserType.ADMIN)) {
-            userTypes.add(DBUserType.RESPONDER.name());
+                && DBSession.getType().equals(UserType.ADMIN)) {
+            userTypes.add(UserType.RESPONDER.name());
         } else {
             chB_userType.setDisable(true);
         }
@@ -62,7 +62,7 @@ public class RegistrationController {
         //TODO: input data confirmation
         //login check
         String login = TF_login.getText();
-        if (DBUserQuery.hasLogin(login)) {
+        if (UserQuery.hasLogin(login)) {
             label_loginOccupied.setVisible(true);
             error = true;
         }
@@ -85,7 +85,7 @@ public class RegistrationController {
         String surname = TF_surname.getText();
         String patronymic = TF_patronymic.getText();
         String passwordEncrypted = SHA256Encryptor.encrypt(password);
-        DBUserQuery.insertUser(name, surname, patronymic,
+        UserQuery.insertUser(name, surname, patronymic,
                 login, passwordEncrypted, DBSession.getType());
     }
 

@@ -1,8 +1,8 @@
 package gui.login;
 
 import db.DBConnector;
-import db.DBNoReturnQuery;
-import db.DBUserType;
+import db.SimpleQuery;
+import db.entities.user.UserType;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DBSession {
-    private static DBUserType type = null;
+    private static UserType type = null;
 
     static boolean init(String userLogin, String userPassword) throws SQLException {
         boolean isInitialized = false;
@@ -26,8 +26,8 @@ public class DBSession {
         Statement st = connection.createStatement();
         ResultSet rs = st.executeQuery(query);
         if (rs.next()) {
-            type = DBUserType.valueOf(rs.getString("name"));
-            DBNoReturnQuery.log("user logged in");
+            type = UserType.valueOf(rs.getString("name"));
+            SimpleQuery.log("user logged in");
             isInitialized = true;
         }
         rs.close();
@@ -35,7 +35,7 @@ public class DBSession {
         return isInitialized;
     }
 
-    public static DBUserType getType() {
+    public static UserType getType() {
         return type;
     }
 
@@ -45,7 +45,7 @@ public class DBSession {
 
     public static void logOut() throws SQLException {
         if (type != null) {
-            DBNoReturnQuery.log("user logged out");
+            SimpleQuery.log("user logged out");
             type = null;
         }
     }

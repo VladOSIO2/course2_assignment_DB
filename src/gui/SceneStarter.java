@@ -23,8 +23,7 @@ public class SceneStarter {
             if (actionEvent != null) {
                 ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -43,6 +42,22 @@ public class SceneStarter {
 
     public static void startSceneLogin () {
         startScene(null, "/gui/login/loginPane.fxml", "Авторизація");
+    }
+
+    public static void startSceneQuestionManager(ActionEvent actionEvent) {
+        startScene(actionEvent, "/gui/questionManager/questionManagerPane.fxml", "Менеджер питань");
+    }
+
+    public static void startSceneQuizStats(ActionEvent actionEvent) {
+        startScene(actionEvent, "/gui/quizStatistics/quizStatisticsPane.fxml", "Статистика питань");
+    }
+
+    public static void startSceneLogs(ActionEvent actionEvent) {
+        startScene(actionEvent, "/gui/logs/logsInfoPane.fxml", "Логи");
+    }
+
+    public static void startSceneGeneralStats(ActionEvent actionEvent) {
+        startScene(actionEvent, "/gui/generalStats/generalStatsPane.fxml", "Загальна статистика");
     }
 
     public static void exit(ActionEvent actionEvent) {
