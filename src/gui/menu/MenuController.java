@@ -35,7 +35,8 @@ public class MenuController {
 
     @FXML
     private void getRegistrationScene(ActionEvent actionEvent) {
-        SceneStarter.startSceneRegistration(actionEvent);
+        SceneStarter.startSceneChooseQuestion(actionEvent);
+        //SceneStarter.startSceneRegistration(actionEvent);
     }
 
     @FXML

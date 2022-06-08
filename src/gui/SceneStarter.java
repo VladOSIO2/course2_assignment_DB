@@ -60,6 +60,10 @@ public class SceneStarter {
         startScene(actionEvent, "/gui/generalStats/generalStatsPane.fxml", "Загальна статистика");
     }
 
+    public static void startSceneChooseQuestion(ActionEvent actionEvent) {
+        startScene(actionEvent, "/gui/chooseQuiz/chooseQuizPane.fxml", "Обрати тестування");
+    }
+
     public static void exit(ActionEvent actionEvent) {
         if (actionEvent != null) {
             ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
