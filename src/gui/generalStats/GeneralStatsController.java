@@ -64,20 +64,4 @@ public class GeneralStatsController {
         );
         GUIUtil.showInfoAlert("Створення файлу:", result);
     }
-
-    /**
-     * creates a pdf report:
-     * min and max mark for each test
-     */
-    @FXML
-    private void printReport2() throws SQLException {
-        String result = PDFBuilder.build(
-                "Звіт1",
-                "Звіт: тема з найменшою кількістю питань в кожному предметі",
-                List.of("Назва предмету", "Назва теми", "Клькість питань"),
-                ReportQuery.leastQuestionsThemeInEachSubject(),
-                new int[]{30, 30, 30}
-        );
-        GUIUtil.showInfoAlert("Створення файлу:", result);
-    }
 }

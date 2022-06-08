@@ -5,8 +5,8 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Rectangle?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.generalStats.GeneralStatsController">
-   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="GRAY" height="34.0" width="600.0" />
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="259.0" prefWidth="387.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.generalStats.GeneralStatsController">
+   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="GRAY" height="34.0" width="387.0" />
    <Button layoutX="232.0" layoutY="2.0" mnemonicParsing="false" onAction="#logOut" prefHeight="25.0" prefWidth="113.0" text="Вихід з акаунту" />
    <Button layoutX="121.0" layoutY="2.0" mnemonicParsing="false" onAction="#exit" text="Вихід з додатку" />
    <Button layoutX="10.0" layoutY="2.0" mnemonicParsing="false" onAction="#returnBack" text="До меню" />
@@ -14,8 +14,6 @@
    <Button layoutX="21.0" layoutY="73.0" mnemonicParsing="false" onAction="#showMostValuableAuthor" text="Показати" />
    <Label layoutX="21.0" layoutY="117.0" text="Тема з найменшою к-стю питань в кожному предметі" />
    <Button layoutX="21.0" layoutY="134.0" mnemonicParsing="false" onAction="#printReport1" text="Отримати звіт..." />
-   <Label layoutX="21.0" layoutY="187.0" text="Мінімальна та максимальна оцінка для кожного тестування" />
-   <Button layoutX="21.0" layoutY="204.0" mnemonicParsing="false" onAction="#printReport2" text="Отримати звіт..." />
-   <Label layoutX="21.0" layoutY="256.0" text="Тест із найбільшою кількістю проходжень" />
-   <Button layoutX="21.0" layoutY="273.0" mnemonicParsing="false" onAction="#showAndUpdateTest" text="Показати та відмітити це в БД" />
+   <Label layoutX="21.0" layoutY="188.0" text="Тест із найбільшою кількістю проходжень" />
+   <Button layoutX="21.0" layoutY="205.0" mnemonicParsing="false" onAction="#showAndUpdateTest" text="Показати та відмітити це в БД" />
 </Pane>

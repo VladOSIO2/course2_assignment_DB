@@ -11,7 +11,6 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="389.0" prefWidth="307.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.chooseQuiz.ChooseQuizController">
    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="GRAY" height="34.0" width="307.0" />
-   <Button layoutX="7.0" layoutY="5.0" mnemonicParsing="false" onAction="#cancel" prefHeight="25.0" prefWidth="113.0" text="Відмінити" />
    <ChoiceBox fx:id="chB_subject" layoutX="85.0" layoutY="42.0" prefHeight="25.0" prefWidth="215.0" />
    <Label layoutX="14.0" layoutY="46.0" text="Предмет" />
    <ChoiceBox fx:id="chB_theme" layoutX="85.0" layoutY="72.0" prefHeight="25.0" prefWidth="215.0" />
@@ -19,6 +18,7 @@
    <Label layoutX="12.0" layoutY="121.0" text="Пошук тестування:" />
    <TextField fx:id="TF_searchQuiz" layoutX="12.0" layoutY="138.0" prefHeight="25.0" prefWidth="287.0" />
    <ListView fx:id="LV_quizzes" layoutX="12.0" layoutY="172.0" prefHeight="176.0" prefWidth="287.0" />
-   <Button layoutX="12.0" layoutY="355.0" mnemonicParsing="false" onAction="#selectQuiz" prefHeight="25.0" prefWidth="287.0" text="Обрати" />
    <CheckBox fx:id="check_includeNotNowQuiz" layoutX="12.0" layoutY="101.0" mnemonicParsing="false" onAction="#checkIncludeNotNowQuiz" text="тестування, що не проходять в даний час" />
+   <Button layoutX="12.0" layoutY="356.0" mnemonicParsing="false" onAction="#selectQuiz" prefHeight="25.0" prefWidth="287.0" text="Обрати" />
+   <Button layoutX="6.0" layoutY="4.0" mnemonicParsing="false" onAction="#cancel" prefHeight="25.0" prefWidth="115.0" text="Відмінити" />
 </Pane>

@@ -27,4 +27,62 @@ public class ReportQuery {
                 """;
         return SimpleQuery.getStringList(query, "subject_name", "theme_name", "count");
     }
+
+    public static List<String> getFullResults(int quizID) throws SQLException {
+        String query = """
+                SELECT responder_id,
+                 CONCAT_WS(' ', r.name, surname, patronymic) AS fullname,
+                 MAX(mark) AS mark,
+                 'Не перебільшено' AS minutes_used,
+                 'Здано вчасно' AS timestamp_exceed
+                FROM quiz_completion AS qc
+                JOIN quiz AS q USING (quiz_id)
+                JOIN responder AS r USING (responder_id)
+                WHERE quiz_id = %d
+                 AND TIMESTAMPDIFF(MINUTE , qc.dt_start, qc.dt_end) <= q.time_to_do
+                 AND TIMESTAMPDIFF(MINUTE, qc.dt_end, q.dt_end) >= 0
+                GROUP BY fullname
+                UNION ALL
+                SELECT responder_id,
+                 CONCAT_WS(' ', r.name, surname, patronymic) AS fullname,
+                 mark,
+                 CONCAT('Перебільшено на ', TIMESTAMPDIFF(MINUTE, qc.dt_start,
+                qc.dt_end) - q.time_to_do, ' хв') AS minutes_used,
+                 'Здано вчасно' AS timestamp_exceed
+                FROM quiz_completion AS qc
+                JOIN quiz AS q USING (quiz_id)
+                JOIN responder AS r USING (responder_id)
+                WHERE quiz_id = %d
+                 AND TIMESTAMPDIFF(MINUTE , qc.dt_start, qc.dt_end) > q.time_to_do
+                 AND TIMESTAMPDIFF(MINUTE, qc.dt_end, q.dt_end) >= 0
+                UNION ALL
+                SELECT responder_id,
+                 CONCAT_WS(' ', r.name, surname, patronymic) AS fullname,
+                 mark,
+                 CONCAT('Перебільшено на ', TIMESTAMPDIFF(MINUTE, qc.dt_start,
+                qc.dt_end) - q.time_to_do, ' хв') AS minutes_used,
+                 CONCAT('Здано пізніше на ', TIMESTAMPDIFF(MINUTE, q.dt_end,
+                qc.dt_end), ' хв') AS timestamp_exceed
+                FROM quiz_completion AS qc
+                JOIN quiz AS q USING (quiz_id)
+                JOIN responder AS r USING (responder_id)
+                WHERE quiz_id = %d
+                 AND TIMESTAMPDIFF(MINUTE , qc.dt_start, qc.dt_end) > q.time_to_do
+                 AND TIMESTAMPDIFF(MINUTE, qc.dt_end, q.dt_end) < 0
+                UNION ALL
+                SELECT responder_id,
+                 CONCAT_WS(' ', r.name, surname, patronymic) AS fullname,
+                 mark,
+                 'Не перебільшено' AS minutes_used,
+                 CONCAT('Здано пізніше на ', TIMESTAMPDIFF(MINUTE, q.dt_end,
+                qc.dt_end), ' хв') AS timestamp_exceed
+                FROM quiz_completion AS qc
+                 JOIN quiz AS q USING (quiz_id)
+                 JOIN responder AS r USING (responder_id)
+                WHERE quiz_id = %d
+                 AND TIMESTAMPDIFF(MINUTE , qc.dt_start, qc.dt_end) <= q.time_to_do
+                 AND TIMESTAMPDIFF(MINUTE, qc.dt_end, q.dt_end) < 0
+                """.formatted(quizID, quizID, quizID, quizID);
+        return SimpleQuery.getStringList(query, "fullname", "mark", "minutes_used", "timestamp_exceed");
+    }
 }
