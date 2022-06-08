@@ -1,5 +1,6 @@
 package gui.questionManager;
 
+import db.entities.question.GradeQuery;
 import db.entities.question.SubjectQuery;
 import db.entities.question.ThemeQuery;
 import db.entities.user.UserType;
@@ -36,6 +37,9 @@ public class QuestionManagerController {
     @FXML private ChoiceBox<String> chB_grade;
 
     @FXML private TextField TF_searchQuestion;
+    @FXML private ListView<String> LV_questions;
+    @FXML private Label label_selectedQuestion;
+    @FXML private Label label_questionAuthor;
 
     private Map<Integer, String> subjectMap = new LinkedHashMap<>();
     private Pair<Integer, String> selectedSubject = new Pair<>(-1, "");
@@ -43,8 +47,10 @@ public class QuestionManagerController {
     private Map<Integer, String> themeMap = new LinkedHashMap<>();
     private Pair<Integer, String> selectedTheme = new Pair<>(-1, "");
 
+    private Pair<Integer, String> selectedGrade = new Pair<>(-1, "");
+
     @FXML
-    private void initialize() {
+    private void initialize() throws SQLException {
         if (!DBSession.getType().equals(UserType.ADMIN)) {
             button_addSubject.setVisible(false);
             button_addTheme.setVisible(false);
@@ -52,6 +58,7 @@ public class QuestionManagerController {
             button_deleteTheme.setVisible(false);
         }
 
+//        Subjects
         TF_searchSubject.textProperty().addListener(
                 ((observableValue, oldVal, newVal) -> fillSubjects(newVal))
         );
@@ -73,6 +80,7 @@ public class QuestionManagerController {
                 })
         );
 
+//        Themes
         TF_searchTheme.textProperty().addListener(
                 ((observableValue, oldVal, newVal) -> fillThemes(newVal))
         );
@@ -93,11 +101,15 @@ public class QuestionManagerController {
 
                 })
         );
-    }
 
-    @FXML
-    private void checkThemeSearch() {
-        fillThemes(TF_searchTheme.getText());
+//        Grades
+        Map<Integer, String> gradeMap = GradeQuery.getGrades();
+        ObservableList<String> list = FXCollections.observableArrayList(gradeMap.values());
+        list.add("Будь-який");
+        chB_grade.setItems(list);
+        chB_grade.setValue("Будь-який");
+//        Questions
+
     }
 
     @FXML
@@ -107,6 +119,35 @@ public class QuestionManagerController {
 
     @FXML
     private void deleteSubject(ActionEvent actionEvent) {
+
+    }
+
+    @FXML
+    private void addTheme(ActionEvent actionEvent) {
+    }
+
+    @FXML
+    private void deleteTheme(ActionEvent actionEvent) {
+
+    }
+
+    @FXML
+    private void checkThemeSearch() {
+        fillThemes(TF_searchTheme.getText());
+    }
+
+    @FXML
+    private void chooseGrade(ActionEvent actionEvent) {
+        fillQuestions(TF_searchQuestion.getText());
+    }
+
+    @FXML
+    private void addQuestion(ActionEvent actionEvent) {
+
+    }
+
+    @FXML
+    private void deleteQuestion(ActionEvent actionEvent) {
 
     }
 
@@ -129,23 +170,8 @@ public class QuestionManagerController {
         SceneStarter.exit(actionEvent);
     }
 
-    public void showAnswerOptions() {
-    }
-
-
-
-    public void deleteTheme(ActionEvent actionEvent) {
-    }
-
-    public void addTheme(ActionEvent actionEvent) {
-    }
-
-
-
-    public void deleteQuestion(ActionEvent actionEvent) {
-    }
-
-    public void addQuestion(ActionEvent actionEvent) {
+    @FXML
+    private void showAnswerOptions() {
     }
 
     private void fillSubjects(String subjectPart) {
@@ -177,5 +203,10 @@ public class QuestionManagerController {
         ObservableList<String> list = FXCollections.observableArrayList(themeMap.values());
         LV_themes.setItems(list);
     }
+
+    private void fillQuestions(String questionPart) {
+
+    }
+
 
 }

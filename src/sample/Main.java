@@ -1,11 +1,13 @@
 package sample;
 
+import db.entities.question.ReportQuery;
 import gui.SceneStarter;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import pdfbuilder.PDFBuilder;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.sql.SQLException;
+import java.util.List;
 
 public class Main extends Application {
 

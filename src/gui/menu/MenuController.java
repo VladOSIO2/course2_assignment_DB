@@ -55,7 +55,7 @@ public class MenuController {
 
     @FXML
     private void getGeneralStats(ActionEvent actionEvent) {
-        SceneStarter.
+        SceneStarter.startSceneGeneralStats(actionEvent);
     }
 
     @FXML

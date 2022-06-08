@@ -1,4 +1,4 @@
-package gui.quizStatistics;
+package gui.quizStats;
 
 import gui.SceneStarter;
 import gui.login.DBSession;
@@ -7,7 +7,7 @@ import javafx.fxml.FXML;
 
 import java.sql.SQLException;
 
-public class QuizStatisticsController {
+public class QuizStatsController {
 
     //TODO: control buttons
 

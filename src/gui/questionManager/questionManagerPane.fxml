@@ -17,8 +17,8 @@
    <Button layoutX="10.0" layoutY="2.0" mnemonicParsing="false" onAction="#returnBack" text="До меню" />
    <Button layoutX="369.0" layoutY="430.0" mnemonicParsing="false" onAction="#showAnswerOptions" text="Варіанти відповіді..." />
    <TextField fx:id="TF_searchSubject" layoutX="77.0" layoutY="64.0" />
-   <ListView layoutX="244.0" layoutY="151.0" prefHeight="134.0" prefWidth="250.0" />
-   <Label layoutX="248.0" layoutY="322.0" text="&lt;Питання&gt;" />
+   <ListView fx:id="LV_questions" layoutX="244.0" layoutY="151.0" prefHeight="134.0" prefWidth="250.0" />
+   <Label fx:id="label_selectedQuestion" layoutX="248.0" layoutY="322.0" text="&lt;Питання&gt;" />
    <Label layoutX="251.0" layoutY="41.0" text="Рівень" />
    <Label layoutX="244.0" layoutY="74.0" text="Питання" />
    <Label layoutX="14.0" layoutY="189.0" text="Обрано:" />
@@ -38,8 +38,8 @@
    <Button fx:id="button_deleteTheme" layoutX="74.0" layoutY="406.0" mnemonicParsing="false" onAction="#deleteTheme" prefHeight="25.0" prefWidth="149.0" text="Видалити цю тему" />
    <Button fx:id="button_addTheme" layoutX="77.0" layoutY="242.0" mnemonicParsing="false" onAction="#addTheme" prefHeight="25.0" prefWidth="149.0" text="Додати..." />
    <ListView fx:id="LV_themes" layoutX="15.0" layoutY="312.0" prefHeight="93.0" prefWidth="210.0" />
-   <ChoiceBox fx:id="chB_grade" layoutX="306.0" layoutY="38.0" prefHeight="25.0" prefWidth="189.0" />
-   <Label layoutX="294.0" layoutY="394.0" text="&lt;Автор&gt;" />
+   <ChoiceBox fx:id="chB_grade" layoutX="306.0" layoutY="38.0" onAction="#chooseGrade" prefHeight="25.0" prefWidth="189.0" />
+   <Label fx:id="label_questionAuthor" layoutX="294.0" layoutY="394.0" text="&lt;Автор&gt;" />
    <Label layoutX="247.0" layoutY="298.0" text="Обрано:" />
    <Button layoutX="359.0" layoutY="294.0" mnemonicParsing="false" onAction="#deleteQuestion" prefHeight="25.0" prefWidth="133.0" text="Видалити це питання" />
    <Line endX="286.9999694824219" endY="-97.0000228881836" layoutX="218.0" layoutY="164.0" startX="14.99998950958252" startY="-97.00001525878906" stroke="GREY" />

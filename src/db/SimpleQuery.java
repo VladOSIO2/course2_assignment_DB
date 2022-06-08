@@ -24,13 +24,15 @@ public class SimpleQuery {
         execute(query);
     }
 
-    public static List<String> getStringList(String query, String colName) throws SQLException {
+    public static List<String> getStringList(String query, String... colNames) throws SQLException {
         List<String> values = new ArrayList<>();
         Connection con = DBConnector.getInstance().getConnection();
         Statement st = con.createStatement();
         ResultSet rs = st.executeQuery(query);
         while (rs.next()) {
-            values.add(rs.getString(colName));
+            for (String colName : colNames) {
+                values.add(rs.getString(colName));
+            }
         }
         rs.close();
         st.close();
@@ -67,5 +69,18 @@ public class SimpleQuery {
         rs.close();
         st.close();
         return map;
+    }
+
+    public static Integer getInt(String query, String intCol) throws SQLException {
+        Integer value = null;
+        Connection con = DBConnector.getInstance().getConnection();
+        Statement st = con.createStatement();
+        ResultSet rs = st.executeQuery(query);
+        if (rs.next()) {
+            value = rs.getInt(intCol);
+        }
+        rs.close();
+        st.close();
+        return value;
     }
 }
