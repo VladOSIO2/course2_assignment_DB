@@ -25,10 +25,10 @@ public class MenuController {
             //not admin
             button_logInfo.setVisible(false);
             button_generalStats.setVisible(false);
+            button_quizStats.setVisible(false);
             if (!DBSession.getType().equals(UserType.AUTHOR)) {
                 //not author & not admin
                 button_questionManager.setVisible(false);
-                button_quizStats.setVisible(false);
             }
         }
     }

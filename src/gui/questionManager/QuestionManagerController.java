@@ -7,6 +7,7 @@ import db.entities.user.UserType;
 import gui.GUIUtil;
 import gui.SceneStarter;
 import gui.login.DBSession;
+import gui.questionManager.addSubject.AddSubjectController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -24,6 +25,8 @@ public class QuestionManagerController {
     @FXML private Button button_addSubject;
     @FXML private Button button_deleteTheme;
     @FXML private Button button_addTheme;
+    @FXML private Button button_updateSubject;
+    @FXML private Button button_updateTheme;
 
     @FXML private TextField TF_searchSubject;
     @FXML private ListView<String> LV_subjects;
@@ -66,7 +69,8 @@ public class QuestionManagerController {
         LV_subjects.getSelectionModel().selectedIndexProperty().addListener(
                 ((observableValue, oldVal, newVal) -> {
                     String subject = LV_subjects.getSelectionModel().selectedItemProperty().get();
-                    if (newVal.intValue() != -1) {
+                    boolean isSelected = newVal.intValue() != -1;
+                    if (isSelected) {
                         selectedSubject = new Pair<>(
                                 new ArrayList<>(subjectMap.keySet()).get(newVal.intValue()),
                                 subject
@@ -76,6 +80,8 @@ public class QuestionManagerController {
                         selectedSubject = new Pair<>(-1, "");
                         label_selectedSubject.setText("<Предмет>");
                     }
+                    button_deleteSubject.setDisable(!isSelected);
+                    button_updateSubject.setDisable(!isSelected);
                     fillThemes(TF_searchTheme.getText());
                 })
         );
@@ -88,7 +94,8 @@ public class QuestionManagerController {
         LV_themes.getSelectionModel().selectedIndexProperty().addListener(
                 ((observableValue, oldVal, newVal) -> {
                     String theme = LV_themes.getSelectionModel().selectedItemProperty().get();
-                    if (newVal.intValue() != -1) {
+                    boolean isSelected = newVal.intValue() != -1;
+                    if (isSelected) {
                         selectedTheme = new Pair<>(
                                 new ArrayList<>(themeMap.keySet()).get(newVal.intValue()),
                                 theme
@@ -98,7 +105,8 @@ public class QuestionManagerController {
                         selectedTheme = new Pair<>(-1, "");
                         label_selectedTheme.setText("<Тема>");
                     }
-
+                    button_deleteTheme.setDisable(!isSelected);
+                    button_updateTheme.setDisable(!isSelected);
                 })
         );
 
@@ -108,18 +116,40 @@ public class QuestionManagerController {
         list.add("Будь-який");
         chB_grade.setItems(list);
         chB_grade.setValue("Будь-який");
+
 //        Questions
 
     }
 
     @FXML
-    private void addSubject(ActionEvent actionEvent) {
-
+    private void addSubject() {
+        AddSubjectController.show(new Pair<>(-1, ""), false);
+        fillSubjects(TF_searchSubject.getText());
     }
 
     @FXML
-    private void deleteSubject(ActionEvent actionEvent) {
+    private void updateSubject() {
+        AddSubjectController.show(
+                new Pair<>(
+                        selectedSubject.getKey(),
+                        selectedSubject.getValue()),
+                true);
+        fillSubjects(TF_searchSubject.getText());
+    }
 
+    @FXML
+    private void deleteSubject() {
+        if (GUIUtil.showConfirmationAlert(
+                "Видалити предмет?",
+                "Видалити предмет: " + selectedSubject.getValue() + "?")) {
+            String res = SubjectQuery.deleteSubject(selectedSubject.getKey());
+            if (res.contains("Помилка")) {
+                GUIUtil.showErrorAlert(res);
+            } else {
+                GUIUtil.showInfoAlert("Предмет успішно видалено!", res);
+            }
+        }
+        fillSubjects(TF_searchSubject.getText());
     }
 
     @FXML
@@ -128,6 +158,11 @@ public class QuestionManagerController {
 
     @FXML
     private void deleteTheme(ActionEvent actionEvent) {
+
+    }
+
+    @FXML
+    private void updateTheme(ActionEvent actionEvent) {
 
     }
 
@@ -207,6 +242,4 @@ public class QuestionManagerController {
     private void fillQuestions(String questionPart) {
 
     }
-
-
 }

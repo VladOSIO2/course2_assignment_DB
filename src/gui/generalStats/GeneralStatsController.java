@@ -1,6 +1,7 @@
 package gui.generalStats;
 
 import db.entities.question.AuthorQuery;
+import db.entities.question.QuizQuery;
 import db.entities.question.ReportQuery;
 import gui.GUIUtil;
 import gui.SceneStarter;
@@ -11,6 +12,7 @@ import pdfbuilder.PDFBuilder;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 public class GeneralStatsController {
 
@@ -28,8 +30,16 @@ public class GeneralStatsController {
     }
 
     @FXML
-    private void showAndUpdateTest(ActionEvent actionEvent) {
-
+    private void showAndUpdateTest() throws SQLException {
+        Map<Integer, String> mapQuiz = QuizQuery.updateAndGetMostPopularQuizzes();
+        StringBuilder sb = new StringBuilder("Оновлено інформацію про найбільш популярні питання\n");
+        if (mapQuiz.size() == 1) {
+            sb.append("Найбільш популярне питання на даний момент:\n");
+        } else {
+            sb.append("Найбільш популярні питання на даний момент:\n");
+        }
+        mapQuiz.forEach((k, v) -> sb.append(k).append(" : ").append(v));
+        GUIUtil.showInfoAlert("Найбільш популярні питання", sb.toString());
     }
 
     @FXML
@@ -61,6 +71,22 @@ public class GeneralStatsController {
                 List.of("Назва предмету", "Назва теми", "Клькість питань"),
                 ReportQuery.leastQuestionsThemeInEachSubject(),
                 new int[]{25, 37, 8}
+        );
+        GUIUtil.showInfoAlert("Створення файлу:", result);
+    }
+
+    /**
+     * creates a pdf report:
+     * average level of success for each test
+     */
+    @FXML
+    private void printReport2() throws SQLException {
+        String result = PDFBuilder.build(
+                "Звіт2",
+                "Звіт: Середня успішність для кожного тестування",
+                List.of("Номер тестування", "Назва теми", "Успішність, %"),
+                ReportQuery.averageSuccess(),
+                new int[]{13, 50, 17}
         );
         GUIUtil.showInfoAlert("Створення файлу:", result);
     }

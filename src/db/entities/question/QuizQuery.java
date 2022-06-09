@@ -5,6 +5,8 @@ import db.SimpleQuery;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class QuizQuery {
     public static Map<Integer, String> getQuizzes(
@@ -53,5 +55,33 @@ public class QuizQuery {
                 AND mark BETWEEN %d AND %d
                 """.formatted(quizID, markFrom, markTo);
         return SimpleQuery.getInt(query, "total_count");
+    }
+
+    public static Map<Integer, String> updateAndGetMostPopularQuizzes() throws SQLException {
+        SimpleQuery.execute("UPDATE quiz SET info = NULL;");
+
+        String query = """
+                UPDATE quiz AS q
+                SET q.info = 'most popular quiz'
+                WHERE q.quiz_id IN (
+                 SELECT quiz_id FROM quiz_completion
+                 HAVING COUNT(DISTINCT responder_id) >= ALL (
+                 SELECT COUNT(DISTINCT responder_id)
+                 FROM quiz_completion AS qc
+                 GROUP BY qc.quiz_id))
+                """;
+        SimpleQuery.execute(query);
+
+        query = """
+                SELECT quiz_id, quiz.name FROM quiz
+                WHERE info = 'most popular quiz'
+                """;
+        Map<Integer, String> map =
+                SimpleQuery.getIntegerStringMap(query, "quiz_id", "name");
+        Set<String> idsAsStr = new TreeSet<>();
+        map.keySet().forEach(i -> idsAsStr.add(Integer.toString(i)));
+        SimpleQuery.log("updated most popular quizzes: now set to "
+                + String.join(", ", idsAsStr));
+        return map;
     }
 }

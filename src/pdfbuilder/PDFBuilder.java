@@ -49,6 +49,7 @@ public class PDFBuilder {
 //            filling document
             document.open();
             document.add(pdfTitle(title));
+            document.add(pdfTitle("Звіт за " + datetime));
             document.add(pdfTitle(" "));
             PdfPTable table = new PdfPTable(header.size());
             fillTableHeader(table, header);

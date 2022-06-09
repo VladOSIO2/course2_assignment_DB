@@ -28,14 +28,13 @@
    <Line endX="173.00001525878906" endY="96.0" layoutX="59.0" layoutY="364.0" startX="173.00001525878906" startY="-337.0" stroke="GREY" />
    <Line endX="246.00001525878906" endY="-96.50001525878906" layoutX="-14.0" layoutY="334.0" startX="14.99998950958252" startY="-97.00001525878906" stroke="GREY" />
    <CheckBox fx:id="check_searchThemeWithSubject" layoutX="15.0" layoutY="294.0" mnemonicParsing="false" onAction="#checkThemeSearch" text="Шукати за предметом" />
-   <Button fx:id="button_deleteSubject" layoutX="73.0" layoutY="185.0" mnemonicParsing="false" onAction="#deleteSubject" prefHeight="25.0" prefWidth="149.0" text="Видалити цей предмет" />
    <Button fx:id="button_addSubject" layoutX="77.0" layoutY="37.0" mnemonicParsing="false" onAction="#addSubject" prefHeight="25.0" prefWidth="149.0" text="Додати..." />
    <Label fx:id="label_selectedTheme" layoutX="12.0" layoutY="437.0" text="&lt;Тема&gt;" />
    <TextField fx:id="TF_searchTheme" layoutX="77.0" layoutY="269.0" />
    <Label layoutX="15.0" layoutY="410.0" text="Обрано:" />
    <Label layoutX="14.0" layoutY="246.0" text="Тема" />
    <Label layoutX="15.0" layoutY="273.0" text="Пошук:" />
-   <Button fx:id="button_deleteTheme" layoutX="74.0" layoutY="406.0" mnemonicParsing="false" onAction="#deleteTheme" prefHeight="25.0" prefWidth="149.0" text="Видалити цю тему" />
+   <Button fx:id="button_deleteTheme" disable="true" layoutX="66.0" layoutY="406.0" mnemonicParsing="false" onAction="#deleteTheme" prefHeight="25.0" prefWidth="80.0" text="Видалити" />
    <Button fx:id="button_addTheme" layoutX="77.0" layoutY="242.0" mnemonicParsing="false" onAction="#addTheme" prefHeight="25.0" prefWidth="149.0" text="Додати..." />
    <ListView fx:id="LV_themes" layoutX="15.0" layoutY="312.0" prefHeight="93.0" prefWidth="210.0" />
    <ChoiceBox fx:id="chB_grade" layoutX="306.0" layoutY="38.0" onAction="#chooseGrade" prefHeight="25.0" prefWidth="189.0" />
@@ -49,4 +48,7 @@
    <CheckBox layoutX="234.0" layoutY="95.0" mnemonicParsing="false" text="Показати питання, яких немає в тестуваннях" />
    <TextField fx:id="TF_searchQuestion" layoutX="306.0" layoutY="124.0" prefHeight="25.0" prefWidth="189.0" />
    <Label layoutX="245.0" layoutY="128.0" text="Пошук:" />
+   <Button fx:id="button_updateSubject" disable="true" layoutX="148.0" layoutY="186.0" mnemonicParsing="false" onAction="#updateSubject" prefHeight="25.0" prefWidth="80.0" text="Змінити..." />
+   <Button fx:id="button_deleteSubject" disable="true" layoutX="66.0" layoutY="186.0" mnemonicParsing="false" onAction="#deleteSubject" prefHeight="25.0" prefWidth="80.0" text="Видалити" />
+   <Button fx:id="button_updateTheme" disable="true" layoutX="148.0" layoutY="406.0" mnemonicParsing="false" onAction="#updateTheme" prefHeight="25.0" prefWidth="80.0" text="Змінити..." />
 </Pane>

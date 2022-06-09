@@ -25,5 +25,15 @@ public class ThemeQuery {
         return SimpleQuery.getIntegerStringMap(query, "theme_id", "themes");
     }
 
+    public static void updateTheme() {
 
+    }
+
+    public static void deleteTheme() {
+
+    }
+
+    public static void insertTheme() {
+
+    }
 }

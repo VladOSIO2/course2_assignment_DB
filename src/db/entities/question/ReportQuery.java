@@ -28,6 +28,25 @@ public class ReportQuery {
         return SimpleQuery.getStringList(query, "subject_name", "theme_name", "count");
     }
 
+    public static List<String> averageSuccess() throws SQLException {
+        String query = """
+                SELECT quiz_id, name AS q_name, 100 * avg_mark / total_points AS completion FROM (
+                 SELECT quiz_id, SUM(points) AS total_points
+                 FROM question_quiz
+                 JOIN question USING (question_id)
+                 JOIN grade USING (grade_id)
+                 GROUP BY (quiz_id)
+                ) AS A
+                JOIN (
+                 SELECT quiz_id, AVG(mark) AS avg_mark
+                 FROM quiz_completion
+                 GROUP BY quiz_id
+                ) AS B USING (quiz_id)
+                JOIN quiz USING (quiz_id);
+                """;
+        return SimpleQuery.getStringList(query, "quiz_id", "q_name", "completion");
+    }
+
     public static List<String> getFullResults(int quizID) throws SQLException {
         String query = """
                 SELECT responder_id,

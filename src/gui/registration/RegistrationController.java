@@ -46,7 +46,7 @@ public class RegistrationController {
         chB_userType.setValue(UserType.RESPONDER.name());
         if (DBSession.getType() != null
                 && DBSession.getType().equals(UserType.ADMIN)) {
-            userTypes.add(UserType.RESPONDER.name());
+            userTypes.add(UserType.AUTHOR.name());
         } else {
             chB_userType.setDisable(true);
         }

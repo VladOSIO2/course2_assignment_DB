@@ -83,4 +83,17 @@ public class SimpleQuery {
         st.close();
         return value;
     }
+
+    public static String getString(String query, String strCol) throws SQLException {
+        String value = null;
+        Connection con = DBConnector.getInstance().getConnection();
+        Statement st = con.createStatement();
+        ResultSet rs = st.executeQuery(query);
+        if (rs.next()) {
+            value = rs.getString(strCol);
+        }
+        rs.close();
+        st.close();
+        return value;
+    }
 }

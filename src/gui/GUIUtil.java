@@ -1,6 +1,7 @@
 package gui;
 
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 
 public class GUIUtil {
     public static void showErrorAlert(String contextText) {
@@ -8,7 +9,7 @@ public class GUIUtil {
         alert.setTitle("Помилка");
         alert.setHeaderText("Помилка");
         alert.setContentText(contextText);
-        alert.show();
+        alert.showAndWait();
     }
 
     public static void showInfoAlert(String headerText , String contextText) {
@@ -16,6 +17,15 @@ public class GUIUtil {
         alert.setTitle("Інформація");
         alert.setHeaderText(headerText);
         alert.setContentText(contextText);
-        alert.show();
+        alert.showAndWait();
+    }
+
+    public static boolean showConfirmationAlert(String headerText , String contextText) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Інформація");
+        alert.setHeaderText(headerText);
+        alert.setContentText(contextText);
+        alert.showAndWait();
+        return alert.getResult() == ButtonType.OK;
     }
 }
