@@ -33,4 +33,14 @@ public class AuthorQuery {
                 """;
         return SimpleQuery.getInt(query, "total");
     }
+
+    public static String getAuthorByQuestion(int questionID) throws SQLException {
+        String query = """
+                SELECT CONCAT_WS(' ', surname, name, patronymic) AS fullname
+                FROM question
+                JOIN author USING (author_id)
+                WHERE question_id = %d
+                """.formatted(questionID);
+        return SimpleQuery.getString(query, "fullname");
+    }
 }

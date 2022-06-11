@@ -6,14 +6,19 @@ import java.util.regex.Pattern;
 
 public class Util {
     public static String splitStringOnLines(String s, int charsOnLine) {
-        String regex = ".{1," + charsOnLine + "}\\s";
-        Matcher m = Pattern.compile(regex).matcher(s);
-        ArrayList<String> lines = new ArrayList<>();
-        while(m.find()) {
-            lines.add(m.group());
+        int size = 0;
+        StringBuilder sb = new StringBuilder();
+        for (String s1 : s.split("\\s+")) {
+            size += s1.length() + 1;
+            if (size < charsOnLine) {
+                sb.append(" ");
+            } else {
+                sb.append("\n");
+                size = 0;
+            }
+            sb.append(s1);
         }
-        return String.join("\n", lines);
-
+        return sb.toString();
     }
 
 

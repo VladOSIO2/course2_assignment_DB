@@ -18,7 +18,10 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class AddSubjectController {
-    public static void show(Pair<Integer, String> subject, boolean isUpdate) {
+    private static boolean suppressAlerts;
+
+    public static void show(Pair<Integer, String> subject, boolean isUpdate, boolean suppressAlerts) {
+        AddSubjectController.suppressAlerts = suppressAlerts;
         Parent root;
         try {
             root = FXMLLoader.load(Objects.requireNonNull(
@@ -45,7 +48,7 @@ public class AddSubjectController {
                     : x -> insertSubject(stage, tf.getText()));
 
             Pane pane = new Pane(root);
-            pane.getChildren().addAll(button, tf);
+            pane.getChildren().addAll(button, tf, label);
 
             stage.setScene(new Scene(pane));
             stage.showAndWait();
@@ -56,7 +59,7 @@ public class AddSubjectController {
     }
 
     private static void updateSubject(Stage stage, Pair<Integer, String> subject, String subjectNew) {
-        if (GUIUtil.showConfirmationAlert(
+        if (suppressAlerts || GUIUtil.showConfirmationAlert(
                 "Змінити назву предмету?",
                 "Змінити назву предмету\n\tз\n%s\n\tна\n%s?"
                         .formatted(subject.getValue(), subjectNew))) {
@@ -64,21 +67,25 @@ public class AddSubjectController {
             if (res.contains("Помилка")) {
                 GUIUtil.showErrorAlert(res);
             } else {
-                GUIUtil.showInfoAlert("Предмет успішно змінено!", res);
+                if (!suppressAlerts) {
+                    GUIUtil.showInfoAlert("Предмет успішно змінено!", res);
+                }
                 stage.close();
             }
         }
     }
 
     private static void insertSubject(Stage stage, String subject) {
-        if (GUIUtil.showConfirmationAlert(
+        if (suppressAlerts || GUIUtil.showConfirmationAlert(
                 "Додати предмет?",
                 "Додати предмет з назвою:\n" + subject + "?")) {
             String res = SubjectQuery.insertSubject(subject);
             if (res.contains("Помилка")) {
                 GUIUtil.showErrorAlert(res);
             } else {
-                GUIUtil.showInfoAlert("Предмет успішно додано!", res);
+                if (!suppressAlerts) {
+                    GUIUtil.showInfoAlert("Предмет успішно додано!", res);
+                }
                 stage.close();
             }
         }

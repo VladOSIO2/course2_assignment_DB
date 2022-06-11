@@ -1,19 +1,19 @@
 package gui.questionManager;
 
-import db.entities.question.GradeQuery;
-import db.entities.question.SubjectQuery;
-import db.entities.question.ThemeQuery;
+import db.entities.question.*;
 import db.entities.user.UserType;
 import gui.GUIUtil;
 import gui.SceneStarter;
 import gui.login.DBSession;
 import gui.questionManager.addSubject.AddSubjectController;
+import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.util.Pair;
+import utility.Util;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -21,6 +21,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class QuestionManagerController {
+    @FXML private Button button_deleteQuestion;
+    @FXML private Button button_updateQuestion;
     @FXML private Button button_deleteSubject;
     @FXML private Button button_addSubject;
     @FXML private Button button_deleteTheme;
@@ -43,6 +45,7 @@ public class QuestionManagerController {
     @FXML private ListView<String> LV_questions;
     @FXML private Label label_selectedQuestion;
     @FXML private Label label_questionAuthor;
+    @FXML private CheckBox check_questionsNotInQuizzes;
 
     private Map<Integer, String> subjectMap = new LinkedHashMap<>();
     private Pair<Integer, String> selectedSubject = new Pair<>(-1, "");
@@ -50,7 +53,15 @@ public class QuestionManagerController {
     private Map<Integer, String> themeMap = new LinkedHashMap<>();
     private Pair<Integer, String> selectedTheme = new Pair<>(-1, "");
 
+    private Map<Integer, String> gradeMap = new LinkedHashMap<>();
     private Pair<Integer, String> selectedGrade = new Pair<>(-1, "");
+
+    private Map<Integer, String> questionMap = new LinkedHashMap<>();
+    private Pair<Integer, String> selectedQuestion = new Pair<>(-1, "");
+
+
+    @FXML CheckBox check_suppressAlerts;
+    private boolean suppressAlerts = false;
 
     @FXML
     private void initialize() throws SQLException {
@@ -83,6 +94,7 @@ public class QuestionManagerController {
                     button_deleteSubject.setDisable(!isSelected);
                     button_updateSubject.setDisable(!isSelected);
                     fillThemes(TF_searchTheme.getText());
+                    fillQuestions(TF_searchQuestion.getText());
                 })
         );
 
@@ -105,25 +117,60 @@ public class QuestionManagerController {
                         selectedTheme = new Pair<>(-1, "");
                         label_selectedTheme.setText("<Тема>");
                     }
+                    fillQuestions(TF_searchQuestion.getText());
                     button_deleteTheme.setDisable(!isSelected);
                     button_updateTheme.setDisable(!isSelected);
                 })
         );
 
 //        Grades
-        Map<Integer, String> gradeMap = GradeQuery.getGrades();
-        ObservableList<String> list = FXCollections.observableArrayList(gradeMap.values());
-        list.add("Будь-який");
-        chB_grade.setItems(list);
+        gradeMap = GradeQuery.getGrades();
+        ObservableList<String> gradeList = FXCollections.observableArrayList();
+        gradeList.add("Будь-який");
+        gradeList.addAll(gradeMap.values());
+        chB_grade.setItems(gradeList);
         chB_grade.setValue("Будь-який");
+        chB_grade.getSelectionModel().selectedIndexProperty().addListener(
+                observable -> {
+                    int i = ((ReadOnlyIntegerProperty) observable).getValue();
+                    if (i == -1 || i == 0) {
+                        selectedGrade = new Pair<>(-1, "");
+                    } else {
+                        int chosen = new ArrayList<>(gradeMap.keySet()).get(i - 1);
+                        selectedGrade = new Pair<>(chosen, gradeMap.get(chosen));
+                    }
+                    fillQuestions(TF_searchQuestion.getText());
+                }
+        );
 
 //        Questions
-
+        TF_searchQuestion.textProperty().addListener(
+                ((observableValue, oldVal, newVal) -> fillQuestions(newVal))
+        );
+        LV_questions.getSelectionModel().selectedIndexProperty().addListener(
+                observable -> {
+                    int i = ((ReadOnlyIntegerProperty) observable).getValue();
+                    if (i == -1) {
+                        selectedQuestion = new Pair<>(-1, "");
+                    } else {
+                        int chosen = new ArrayList<>(questionMap.keySet()).get(i);
+                        selectedQuestion = new Pair<>(chosen, questionMap.get(chosen));
+                        label_selectedQuestion.setText(Util.splitStringOnLines(selectedQuestion.getValue(), 40));
+                        try {
+                            label_questionAuthor.setText(AuthorQuery.getAuthorByQuestion(chosen));
+                        } catch (SQLException e) {
+                            GUIUtil.showErrorAlert(e.getMessage());
+                        }
+                    }
+                    button_deleteQuestion.setDisable(i == -1);
+                    button_updateQuestion.setDisable(i == -1);
+                }
+        );
     }
 
     @FXML
     private void addSubject() {
-        AddSubjectController.show(new Pair<>(-1, ""), false);
+        AddSubjectController.show(new Pair<>(-1, ""), false, suppressAlerts);
         fillSubjects(TF_searchSubject.getText());
     }
 
@@ -133,36 +180,40 @@ public class QuestionManagerController {
                 new Pair<>(
                         selectedSubject.getKey(),
                         selectedSubject.getValue()),
-                true);
+                true,
+                suppressAlerts);
         fillSubjects(TF_searchSubject.getText());
     }
 
     @FXML
     private void deleteSubject() {
-        if (GUIUtil.showConfirmationAlert(
+        if (suppressAlerts || GUIUtil.showConfirmationAlert(
                 "Видалити предмет?",
                 "Видалити предмет: " + selectedSubject.getValue() + "?")) {
             String res = SubjectQuery.deleteSubject(selectedSubject.getKey());
             if (res.contains("Помилка")) {
                 GUIUtil.showErrorAlert(res);
             } else {
-                GUIUtil.showInfoAlert("Предмет успішно видалено!", res);
+                if (!suppressAlerts) {
+                    GUIUtil.showInfoAlert("Предмет успішно видалено!", res);
+                }
             }
         }
         fillSubjects(TF_searchSubject.getText());
     }
 
     @FXML
-    private void addTheme(ActionEvent actionEvent) {
-    }
-
-    @FXML
-    private void deleteTheme(ActionEvent actionEvent) {
+    private void addTheme() {
 
     }
 
     @FXML
-    private void updateTheme(ActionEvent actionEvent) {
+    private void deleteTheme() {
+
+    }
+
+    @FXML
+    private void updateTheme() {
 
     }
 
@@ -207,6 +258,12 @@ public class QuestionManagerController {
 
     @FXML
     private void showAnswerOptions() {
+
+    }
+
+    @FXML
+    private void toggleQuestionsNotInQuizzes() throws SQLException {
+        fillQuestions(TF_searchQuestion.getText());
     }
 
     private void fillSubjects(String subjectPart) {
@@ -233,13 +290,26 @@ public class QuestionManagerController {
                 themeMap = ThemeQuery.searchTheme(themePart);
             }
         } catch (SQLException e) {
-            GUIUtil.showErrorAlert(e.getMessage());
+            GUIUtil.showErrorAlert(Util.splitStringOnLines(e.getMessage(), 60));
         }
         ObservableList<String> list = FXCollections.observableArrayList(themeMap.values());
         LV_themes.setItems(list);
     }
 
-    private void fillQuestions(String questionPart) {
+    private void fillQuestions(String questionPart)  {
+        try {
+            questionMap = QuestionQuery.getQuestions(
+                    selectedTheme.getKey(), selectedGrade.getKey(),
+                    questionPart, check_questionsNotInQuizzes.isSelected());
+            ObservableList<String> list = FXCollections.observableArrayList(questionMap.values());
+            LV_questions.setItems(list);
+        } catch (SQLException e) {
+            GUIUtil.showErrorAlert(e.getMessage());
+        }
+    }
 
+    @FXML
+    private void toggleSuppressAlerts() {
+        suppressAlerts = check_suppressAlerts.isSelected();
     }
 }

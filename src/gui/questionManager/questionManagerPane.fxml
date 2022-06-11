@@ -9,13 +9,14 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="460.0" prefWidth="505.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.questionManager.QuestionManagerController">
    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="GRAY" height="34.0" width="505.0" />
-   <Button layoutX="232.0" layoutY="2.0" mnemonicParsing="false" onAction="#logOut" prefHeight="25.0" prefWidth="113.0" text="Вихід з акаунту" />
-   <Button layoutX="121.0" layoutY="2.0" mnemonicParsing="false" onAction="#exit" text="Вихід з додатку" />
+   <Button layoutX="182.0" layoutY="2.0" mnemonicParsing="false" onAction="#logOut" prefHeight="25.0" prefWidth="113.0" text="Вихід з акаунту" />
+   <Button layoutX="79.0" layoutY="2.0" mnemonicParsing="false" onAction="#exit" text="Вихід з додатку" />
    <Button layoutX="10.0" layoutY="2.0" mnemonicParsing="false" onAction="#returnBack" text="До меню" />
-   <Button layoutX="369.0" layoutY="430.0" mnemonicParsing="false" onAction="#showAnswerOptions" text="Варіанти відповіді..." />
+   <Button fx:id="button_updateQuestion" disable="true" layoutX="369.0" layoutY="430.0" mnemonicParsing="false" onAction="#showAnswerOptions" text="Редактор питання..." />
    <TextField fx:id="TF_searchSubject" layoutX="77.0" layoutY="64.0" />
    <ListView fx:id="LV_questions" layoutX="244.0" layoutY="151.0" prefHeight="134.0" prefWidth="250.0" />
    <Label fx:id="label_selectedQuestion" layoutX="248.0" layoutY="322.0" text="&lt;Питання&gt;" />
@@ -40,15 +41,20 @@
    <ChoiceBox fx:id="chB_grade" layoutX="306.0" layoutY="38.0" onAction="#chooseGrade" prefHeight="25.0" prefWidth="189.0" />
    <Label fx:id="label_questionAuthor" layoutX="294.0" layoutY="394.0" text="&lt;Автор&gt;" />
    <Label layoutX="247.0" layoutY="298.0" text="Обрано:" />
-   <Button layoutX="359.0" layoutY="294.0" mnemonicParsing="false" onAction="#deleteQuestion" prefHeight="25.0" prefWidth="133.0" text="Видалити це питання" />
+   <Button fx:id="button_deleteQuestion" disable="true" layoutX="359.0" layoutY="294.0" mnemonicParsing="false" onAction="#deleteQuestion" prefHeight="25.0" prefWidth="133.0" text="Видалити це питання" />
    <Line endX="286.9999694824219" endY="-97.0000228881836" layoutX="218.0" layoutY="164.0" startX="14.99998950958252" startY="-97.00001525878906" stroke="GREY" />
    <Label layoutX="246.0" layoutY="394.0" text="Автор:" />
    <Button layoutX="344.0" layoutY="70.0" mnemonicParsing="false" onAction="#addQuestion" prefHeight="25.0" prefWidth="149.0" text="Додати..." />
    <Label fx:id="label_selectedSubject" layoutX="11.0" layoutY="217.0" text="&lt;Предмет&gt;" />
-   <CheckBox layoutX="234.0" layoutY="95.0" mnemonicParsing="false" text="Показати питання, яких немає в тестуваннях" />
+   <CheckBox fx:id="check_questionsNotInQuizzes" layoutX="234.0" layoutY="95.0" mnemonicParsing="false" onAction="#toggleQuestionsNotInQuizzes" text="Тільки питання, яких немає в тестуваннях" />
    <TextField fx:id="TF_searchQuestion" layoutX="306.0" layoutY="124.0" prefHeight="25.0" prefWidth="189.0" />
    <Label layoutX="245.0" layoutY="128.0" text="Пошук:" />
    <Button fx:id="button_updateSubject" disable="true" layoutX="148.0" layoutY="186.0" mnemonicParsing="false" onAction="#updateSubject" prefHeight="25.0" prefWidth="80.0" text="Змінити..." />
    <Button fx:id="button_deleteSubject" disable="true" layoutX="66.0" layoutY="186.0" mnemonicParsing="false" onAction="#deleteSubject" prefHeight="25.0" prefWidth="80.0" text="Видалити" />
    <Button fx:id="button_updateTheme" disable="true" layoutX="148.0" layoutY="406.0" mnemonicParsing="false" onAction="#updateTheme" prefHeight="25.0" prefWidth="80.0" text="Змінити..." />
+   <CheckBox fx:id="check_suppressAlerts" layoutX="304.0" layoutY="6.0" mnemonicParsing="false" onAction="#toggleSuppressAlerts" text="Не показувати повідомлення" textFill="WHITE">
+      <font>
+         <Font name="System Bold" size="12.0" />
+      </font>
+   </CheckBox>
 </Pane>
