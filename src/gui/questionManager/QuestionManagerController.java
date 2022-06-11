@@ -6,15 +6,21 @@ import gui.GUIUtil;
 import gui.SceneStarter;
 import gui.login.DBSession;
 import gui.questionManager.addSubject.AddSubjectController;
+import gui.questionManager.addTheme.AddThemeController;
 import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 import javafx.util.Pair;
 import utility.Util;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -74,9 +80,8 @@ public class QuestionManagerController {
 
 //        Subjects
         TF_searchSubject.textProperty().addListener(
-                ((observableValue, oldVal, newVal) -> fillSubjects(newVal))
-        );
-        fillSubjects("");
+                (observable -> fillSubjects()));
+        fillSubjects();
         LV_subjects.getSelectionModel().selectedIndexProperty().addListener(
                 ((observableValue, oldVal, newVal) -> {
                     String subject = LV_subjects.getSelectionModel().selectedItemProperty().get();
@@ -93,16 +98,15 @@ public class QuestionManagerController {
                     }
                     button_deleteSubject.setDisable(!isSelected);
                     button_updateSubject.setDisable(!isSelected);
-                    fillThemes(TF_searchTheme.getText());
-                    fillQuestions(TF_searchQuestion.getText());
+                    fillThemes();
+                    fillQuestions();
                 })
         );
 
 //        Themes
         TF_searchTheme.textProperty().addListener(
-                ((observableValue, oldVal, newVal) -> fillThemes(newVal))
-        );
-        fillThemes("");
+                (observable -> fillThemes()));
+        fillThemes();
         LV_themes.getSelectionModel().selectedIndexProperty().addListener(
                 ((observableValue, oldVal, newVal) -> {
                     String theme = LV_themes.getSelectionModel().selectedItemProperty().get();
@@ -117,7 +121,7 @@ public class QuestionManagerController {
                         selectedTheme = new Pair<>(-1, "");
                         label_selectedTheme.setText("<Тема>");
                     }
-                    fillQuestions(TF_searchQuestion.getText());
+                    fillQuestions();
                     button_deleteTheme.setDisable(!isSelected);
                     button_updateTheme.setDisable(!isSelected);
                 })
@@ -139,23 +143,24 @@ public class QuestionManagerController {
                         int chosen = new ArrayList<>(gradeMap.keySet()).get(i - 1);
                         selectedGrade = new Pair<>(chosen, gradeMap.get(chosen));
                     }
-                    fillQuestions(TF_searchQuestion.getText());
+                    fillQuestions();
                 }
         );
 
 //        Questions
         TF_searchQuestion.textProperty().addListener(
-                ((observableValue, oldVal, newVal) -> fillQuestions(newVal))
-        );
+                (observable -> fillQuestions()));
         LV_questions.getSelectionModel().selectedIndexProperty().addListener(
                 observable -> {
                     int i = ((ReadOnlyIntegerProperty) observable).getValue();
                     if (i == -1) {
                         selectedQuestion = new Pair<>(-1, "");
+                        label_selectedQuestion.setText("<Питання>");
+                        label_questionAuthor.setText("<Автор>");
                     } else {
                         int chosen = new ArrayList<>(questionMap.keySet()).get(i);
                         selectedQuestion = new Pair<>(chosen, questionMap.get(chosen));
-                        label_selectedQuestion.setText(Util.splitStringOnLines(selectedQuestion.getValue(), 40));
+                        label_selectedQuestion.setText(Util.splitStringOnLines(selectedQuestion.getValue(), 34));
                         try {
                             label_questionAuthor.setText(AuthorQuery.getAuthorByQuestion(chosen));
                         } catch (SQLException e) {
@@ -169,20 +174,20 @@ public class QuestionManagerController {
     }
 
     @FXML
-    private void addSubject() {
-        AddSubjectController.show(new Pair<>(-1, ""), false, suppressAlerts);
-        fillSubjects(TF_searchSubject.getText());
+    private void insertSubject() {
+        new AddSubjectController().show(new Pair<>(-1, ""), false, suppressAlerts);
+        fillSubjects();
     }
 
     @FXML
     private void updateSubject() {
-        AddSubjectController.show(
+        new AddSubjectController().show(
                 new Pair<>(
                         selectedSubject.getKey(),
                         selectedSubject.getValue()),
                 true,
                 suppressAlerts);
-        fillSubjects(TF_searchSubject.getText());
+        fillSubjects();
     }
 
     @FXML
@@ -199,32 +204,60 @@ public class QuestionManagerController {
                 }
             }
         }
-        fillSubjects(TF_searchSubject.getText());
+        fillSubjects();
     }
 
     @FXML
-    private void addTheme() {
+    private void insertTheme() throws IOException, SQLException {
+        startAddTheme(false);
+        fillThemes();
+    }
 
+    @FXML
+    private void updateTheme() throws IOException, SQLException {
+        startAddTheme(true);
+        fillThemes();
+    }
+
+    private void startAddTheme(boolean isUpdate) throws IOException, SQLException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
+                "/gui/questionManager/addTheme/addTheme.fxml"));
+        Parent root = fxmlLoader.load();
+        AddThemeController controller = fxmlLoader.getController();
+        controller.init(
+                new Pair<>(selectedTheme.getKey(),selectedTheme.getValue()),
+                isUpdate, suppressAlerts);
+        Stage stage = new Stage();
+        stage.setTitle("Додавання теми");
+        stage.setScene(new Scene(root));
+        stage.showAndWait();
     }
 
     @FXML
     private void deleteTheme() {
-
-    }
-
-    @FXML
-    private void updateTheme() {
-
+        if (suppressAlerts || GUIUtil.showConfirmationAlert(
+                "Видалити тему?",
+                "Видалити тему: " + selectedTheme.getValue() + "?")) {
+            String res = ThemeQuery.deleteTheme(selectedTheme.getKey());
+            if (res.contains("Помилка")) {
+                GUIUtil.showErrorAlert(res);
+            } else {
+                if (!suppressAlerts) {
+                    GUIUtil.showInfoAlert("Тему успішно видалено!", res);
+                }
+            }
+        }
+        fillThemes();
     }
 
     @FXML
     private void checkThemeSearch() {
-        fillThemes(TF_searchTheme.getText());
+        fillThemes();
     }
 
     @FXML
     private void chooseGrade(ActionEvent actionEvent) {
-        fillQuestions(TF_searchQuestion.getText());
+        fillQuestions();
     }
 
     @FXML
@@ -262,11 +295,12 @@ public class QuestionManagerController {
     }
 
     @FXML
-    private void toggleQuestionsNotInQuizzes() throws SQLException {
-        fillQuestions(TF_searchQuestion.getText());
+    private void toggleQuestionsNotInQuizzes() {
+        fillQuestions();
     }
 
-    private void fillSubjects(String subjectPart) {
+    private void fillSubjects() {
+        String subjectPart = TF_searchSubject.getText();
         try {
             subjectMap = SubjectQuery.searchSubject(subjectPart);
         } catch (SQLException e) {
@@ -276,7 +310,8 @@ public class QuestionManagerController {
         LV_subjects.setItems(list);
     }
 
-    private void fillThemes(String themePart) {
+    private void fillThemes() {
+        String themePart = TF_searchTheme.getText();
         try {
             if (check_searchThemeWithSubject.isSelected()) {
                 if (selectedSubject.getKey() == -1) {
@@ -296,9 +331,11 @@ public class QuestionManagerController {
         LV_themes.setItems(list);
     }
 
-    private void fillQuestions(String questionPart)  {
+    private void fillQuestions() {
+        String questionPart = TF_searchQuestion.getText();
         try {
             questionMap = QuestionQuery.getQuestions(
+                    selectedSubject.getKey(),
                     selectedTheme.getKey(), selectedGrade.getKey(),
                     questionPart, check_questionsNotInQuizzes.isSelected());
             ObservableList<String> list = FXCollections.observableArrayList(questionMap.values());

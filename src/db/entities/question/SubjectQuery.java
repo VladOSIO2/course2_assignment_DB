@@ -15,7 +15,7 @@ public class SubjectQuery {
         return SimpleQuery.getIntegerStringMap(query, "subject_id","name");
     }
 
-    private static String getSubjectByID(int subjectID) throws SQLException {
+    public static String getSubjectByID(int subjectID) throws SQLException {
         String querySelectByID = "SELECT * FROM subject WHERE subject_id =" + subjectID;
         return SimpleQuery.getString(querySelectByID, "name");
     }
@@ -84,5 +84,12 @@ public class SubjectQuery {
 
     private static boolean hasThemes(int subjectID) throws SQLException {
         return SimpleQuery.exists("SELECT * FROM theme WHERE subject_id = " + subjectID);
+    }
+
+    public static String getSubjectByTheme(int themeID) throws SQLException {
+        int subjectID = SimpleQuery.getInt(
+                "SELECT subject_id FROM theme WHERE theme_id = " + themeID,
+                "subject_id");
+        return SubjectQuery.getSubjectByID(subjectID);
     }
 }

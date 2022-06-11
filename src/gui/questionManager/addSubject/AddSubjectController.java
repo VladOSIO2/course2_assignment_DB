@@ -18,10 +18,9 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class AddSubjectController {
-    private static boolean suppressAlerts;
+    //TODO: refactoring
 
-    public static void show(Pair<Integer, String> subject, boolean isUpdate, boolean suppressAlerts) {
-        AddSubjectController.suppressAlerts = suppressAlerts;
+    public void show(Pair<Integer, String> subject, boolean isUpdate, boolean suppressAlerts) {
         Parent root;
         try {
             root = FXMLLoader.load(Objects.requireNonNull(
@@ -44,8 +43,8 @@ public class AddSubjectController {
             button.setLayoutY(90);
             button.setPrefSize(287, 25);
             button.setOnAction(isUpdate ?
-                    x -> updateSubject(stage, subject, tf.getText())
-                    : x -> insertSubject(stage, tf.getText()));
+                    x -> updateSubject(stage, suppressAlerts, subject, tf.getText())
+                    : x -> insertSubject(stage, suppressAlerts, tf.getText()));
 
             Pane pane = new Pane(root);
             pane.getChildren().addAll(button, tf, label);
@@ -58,7 +57,9 @@ public class AddSubjectController {
 
     }
 
-    private static void updateSubject(Stage stage, Pair<Integer, String> subject, String subjectNew) {
+    private static void updateSubject(
+            Stage stage, boolean suppressAlerts,
+            Pair<Integer, String> subject, String subjectNew) {
         if (suppressAlerts || GUIUtil.showConfirmationAlert(
                 "Змінити назву предмету?",
                 "Змінити назву предмету\n\tз\n%s\n\tна\n%s?"
@@ -75,7 +76,7 @@ public class AddSubjectController {
         }
     }
 
-    private static void insertSubject(Stage stage, String subject) {
+    private static void insertSubject(Stage stage, boolean suppressAlerts, String subject) {
         if (suppressAlerts || GUIUtil.showConfirmationAlert(
                 "Додати предмет?",
                 "Додати предмет з назвою:\n" + subject + "?")) {

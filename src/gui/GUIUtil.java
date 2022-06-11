@@ -3,6 +3,8 @@ package gui;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
+import java.util.concurrent.Callable;
+
 public class GUIUtil {
     public static void showErrorAlert(String contextText) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
