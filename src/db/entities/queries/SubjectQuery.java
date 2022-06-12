@@ -1,9 +1,8 @@
-package db.entities.question;
+package db.entities.queries;
 
 import db.SimpleQuery;
 
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Map;
 
 public class SubjectQuery {
@@ -91,5 +90,14 @@ public class SubjectQuery {
                 "SELECT subject_id FROM theme WHERE theme_id = " + themeID,
                 "subject_id");
         return SubjectQuery.getSubjectByID(subjectID);
+    }
+
+    public static String getSubjectByQuestion(int questionID) throws SQLException {
+        String query = """
+                SELECT subject.name AS s_name FROM question
+                JOIN theme USING (theme_id)
+                JOIN subject USING (subject_id)
+                WHERE question_id =""" + questionID;
+        return SimpleQuery.getString(query, "s_name");
     }
 }

@@ -1,7 +1,7 @@
 package gui.questionManager.addTheme;
 
-import db.entities.question.SubjectQuery;
-import db.entities.question.ThemeQuery;
+import db.entities.queries.SubjectQuery;
+import db.entities.queries.ThemeQuery;
 import gui.GUIUtil;
 import gui.SceneStarter;
 import javafx.collections.FXCollections;

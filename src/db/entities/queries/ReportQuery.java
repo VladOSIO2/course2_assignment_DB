@@ -1,4 +1,4 @@
-package db.entities.question;
+package db.entities.queries;
 
 import db.SimpleQuery;
 

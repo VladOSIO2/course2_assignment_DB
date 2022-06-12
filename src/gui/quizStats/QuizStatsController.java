@@ -1,7 +1,7 @@
 package gui.quizStats;
 
-import db.entities.question.QuizQuery;
-import db.entities.question.ReportQuery;
+import db.entities.queries.QuizQuery;
+import db.entities.queries.ReportQuery;
 import gui.GUIUtil;
 import gui.SceneStarter;
 import gui.chooseQuiz.ChooseQuizController;
@@ -17,7 +17,6 @@ import javafx.util.Pair;
 import pdfbuilder.PDFBuilder;
 
 import java.sql.SQLException;
-import java.text.NumberFormat;
 import java.util.List;
 
 public class QuizStatsController {

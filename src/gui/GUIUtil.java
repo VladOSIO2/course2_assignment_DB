@@ -6,6 +6,9 @@ import javafx.scene.control.ButtonType;
 import java.util.concurrent.Callable;
 
 public class GUIUtil {
+    public static final String RIGHT_ANSWER_STYLE = "-fx-background-color: #95cf76";
+    public static final String WRONG_ANSWER_STYLE = "-fx-background-color: #e69393";
+
     public static void showErrorAlert(String contextText) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Помилка");

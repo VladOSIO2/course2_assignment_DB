@@ -1,6 +1,6 @@
 package gui.questionManager.addSubject;
 
-import db.entities.question.SubjectQuery;
+import db.entities.queries.SubjectQuery;
 import gui.GUIUtil;
 import gui.SceneStarter;
 import javafx.event.ActionEvent;

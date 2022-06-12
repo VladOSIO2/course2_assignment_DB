@@ -1,12 +1,13 @@
 package gui.questionManager;
 
-import db.entities.question.*;
+import db.entities.queries.*;
 import db.entities.user.UserType;
 import gui.GUIUtil;
 import gui.SceneStarter;
 import gui.login.DBSession;
 import gui.questionManager.addSubject.AddSubjectController;
 import gui.questionManager.addTheme.AddThemeController;
+import gui.questionManager.questionConstructor.QuestionConstructorController;
 import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,6 +17,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import utility.Util;
@@ -229,6 +231,7 @@ public class QuestionManagerController {
                 isUpdate, suppressAlerts);
         Stage stage = new Stage();
         stage.setTitle("Додавання теми");
+        stage.initModality(Modality.WINDOW_MODAL);
         stage.setScene(new Scene(root));
         stage.showAndWait();
     }
@@ -256,21 +259,51 @@ public class QuestionManagerController {
     }
 
     @FXML
-    private void chooseGrade(ActionEvent actionEvent) {
+    private void chooseGrade() {
         fillQuestions();
     }
 
     @FXML
-    private void addQuestion(ActionEvent actionEvent) {
-
+    private void addQuestion() throws SQLException, IOException {
+        startQuestionConstructor(-1);
+        fillQuestions();
     }
 
     @FXML
-    private void deleteQuestion(ActionEvent actionEvent) {
-
+    private void deleteQuestion() {
+        if (suppressAlerts || GUIUtil.showConfirmationAlert(
+                "Видалити питання?",
+                Util.splitStringOnLines("Видалити питання: " + selectedQuestion.getValue() + "?", 35))) {
+            String res = QuestionQuery.deleteQuestion(selectedQuestion.getKey());
+            if (res.contains("Помилка")) {
+                GUIUtil.showErrorAlert(res);
+            } else {
+                if (!suppressAlerts) {
+                    GUIUtil.showInfoAlert("Питання успішно видалено!", res);
+                }
+            }
+        }
+        fillQuestions();
     }
 
-    //TODO: control buttons
+    @FXML
+    private void updateQuestion() throws SQLException, IOException {
+        startQuestionConstructor(selectedQuestion.getKey());
+        fillQuestions();
+    }
+
+    private void startQuestionConstructor(int questionID) throws IOException, SQLException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
+                "/gui/questionManager/questionConstructor/questionConstructor.fxml"));
+        Parent root = fxmlLoader.load();
+        QuestionConstructorController controller = fxmlLoader.getController();
+        controller.init(questionID, suppressAlerts);
+        Stage stage = new Stage();
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.setTitle("Конструктор питань");
+        stage.setScene(new Scene(root));
+        stage.showAndWait();
+    }
 
     @FXML
     private void returnBack(ActionEvent actionEvent) {
@@ -287,11 +320,6 @@ public class QuestionManagerController {
     private void exit(ActionEvent actionEvent) throws SQLException {
         DBSession.logOut();
         SceneStarter.exit(actionEvent);
-    }
-
-    @FXML
-    private void showAnswerOptions() {
-
     }
 
     @FXML

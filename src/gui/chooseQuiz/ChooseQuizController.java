@@ -1,8 +1,8 @@
 package gui.chooseQuiz;
 
-import db.entities.question.QuizQuery;
-import db.entities.question.SubjectQuery;
-import db.entities.question.ThemeQuery;
+import db.entities.queries.QuizQuery;
+import db.entities.queries.SubjectQuery;
+import db.entities.queries.ThemeQuery;
 import gui.GUIUtil;
 import gui.SceneStarter;
 import javafx.beans.property.ReadOnlyIntegerProperty;

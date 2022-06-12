@@ -1,11 +1,9 @@
-package db.entities.question;
+package db.entities.queries;
 
 import db.SimpleQuery;
 
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class ThemeQuery {
     public static Map<Integer, String> searchTheme(String themePart) throws SQLException {
@@ -33,7 +31,7 @@ public class ThemeQuery {
         return SimpleQuery.getString(query, "name");
     }
 
-    public static int getThemeSubject(int themeID) throws SQLException {
+    public static int getThemeSubjectID(int themeID) throws SQLException {
         String query = """
                 SELECT subject_id FROM theme
                 WHERE theme_id =""" + themeID;
@@ -50,6 +48,14 @@ public class ThemeQuery {
         return SimpleQuery.exists(query);
     }
 
+    public static String getThemeByQuestion(int questionID) throws SQLException {
+        String query = """
+                SELECT theme.name AS t_name FROM question
+                JOIN theme USING (theme_id)
+                WHERE question_id =""" + questionID;
+        return SimpleQuery.getString(query, "t_name");
+    }
+
     public static String updateTheme(int themeID, int subjectID, String newName) {
         String queryUpdate = """
                 UPDATE theme
@@ -60,7 +66,7 @@ public class ThemeQuery {
         try {
             if (themeExists(themeID)) {
                 String oldName = getThemeByID(themeID);
-                int oldSubject = getThemeSubject(themeID);
+                int oldSubject = getThemeSubjectID(themeID);
                 SimpleQuery.execute(queryUpdate);
                 if (!newName.equals(oldName)) {
                     SimpleQuery.log("theme #%d: updated name %s->%s"

@@ -16,7 +16,7 @@
    <Button layoutX="182.0" layoutY="2.0" mnemonicParsing="false" onAction="#logOut" prefHeight="25.0" prefWidth="113.0" text="Вихід з акаунту" />
    <Button layoutX="79.0" layoutY="2.0" mnemonicParsing="false" onAction="#exit" text="Вихід з додатку" />
    <Button layoutX="10.0" layoutY="2.0" mnemonicParsing="false" onAction="#returnBack" text="До меню" />
-   <Button fx:id="button_updateQuestion" disable="true" layoutX="369.0" layoutY="430.0" mnemonicParsing="false" onAction="#showAnswerOptions" text="Редактор питання..." />
+   <Button fx:id="button_updateQuestion" disable="true" layoutX="369.0" layoutY="430.0" mnemonicParsing="false" onAction="#updateQuestion" text="Редактор питання..." />
    <TextField fx:id="TF_searchSubject" layoutX="77.0" layoutY="64.0" />
    <ListView fx:id="LV_questions" layoutX="244.0" layoutY="151.0" prefHeight="134.0" prefWidth="250.0" />
    <Label fx:id="label_selectedQuestion" layoutX="248.0" layoutY="322.0" text="&lt;Питання&gt;" />

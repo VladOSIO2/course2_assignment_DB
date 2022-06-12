@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 public class UserQuery {
     public static boolean hasLogin(String login) throws SQLException {
@@ -30,5 +31,12 @@ public class UserQuery {
                 """.formatted(login, passwordEncrypted, typeID, name, surname, patronymic);
         SimpleQuery.execute(query);
         SimpleQuery.log("Created " + type + " with login: " + login);
+    }
+
+    public static List<String> getUserFullname(int userID) throws SQLException {
+        String query = """
+                SELECT name, surname, patronymic FROM user
+                WHERE user_id =""" + userID;
+        return SimpleQuery.getStringList(query, "name", "surname", "patronymic");
     }
 }

@@ -1,9 +1,8 @@
-package db.entities.question;
+package db.entities.queries;
 
 import db.SimpleQuery;
 
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;

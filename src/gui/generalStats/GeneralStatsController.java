@@ -1,8 +1,8 @@
 package gui.generalStats;
 
-import db.entities.question.AuthorQuery;
-import db.entities.question.QuizQuery;
-import db.entities.question.ReportQuery;
+import db.entities.queries.AuthorQuery;
+import db.entities.queries.QuizQuery;
+import db.entities.queries.ReportQuery;
 import gui.GUIUtil;
 import gui.SceneStarter;
 import gui.login.DBSession;
