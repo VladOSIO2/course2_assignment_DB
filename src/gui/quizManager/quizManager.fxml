@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="458.0" prefWidth="388.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.quizManager.QuizManagerController">
+   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="GRAY" height="34.0" width="388.0" />
+   <Button layoutX="232.0" layoutY="2.0" mnemonicParsing="false" onAction="#logOut" prefHeight="25.0" prefWidth="113.0" text="Вихід з акаунту" />
+   <Button layoutX="121.0" layoutY="2.0" mnemonicParsing="false" onAction="#exit" text="Вихід з додатку" />
+   <Button layoutX="10.0" layoutY="2.0" mnemonicParsing="false" onAction="#returnBack" text="До меню" />
+   <DatePicker fx:id="date_start" disable="true" layoutX="73.0" layoutY="154.0" showWeekNumbers="true" />
+   <Label fx:id="label_quizName" layoutX="10.0" layoutY="87.0" text="&lt;Назва&gt;" />
+   <TextField fx:id="TF_hoursStart" disable="true" layoutX="264.0" layoutY="154.0" prefHeight="25.0" prefWidth="41.0" />
+   <TextField fx:id="TF_minutesStart" disable="true" layoutX="324.0" layoutY="154.0" prefHeight="25.0" prefWidth="41.0" />
+   <Label layoutX="313.0" layoutY="153.0" text=":">
+      <font>
+         <Font name="System Bold" size="18.0" />
+      </font>
+   </Label>
+   <Label layoutX="10.0" layoutY="158.0" text="Початок" />
+   <DatePicker fx:id="date_end" disable="true" layoutX="73.0" layoutY="185.0" showWeekNumbers="true" />
+   <TextField fx:id="TF_hoursEnd" disable="true" layoutX="264.0" layoutY="185.0" prefHeight="25.0" prefWidth="41.0" />
+   <TextField fx:id="TF_minutesEnd" disable="true" layoutX="324.0" layoutY="185.0" prefHeight="25.0" prefWidth="41.0" />
+   <Label layoutX="313.0" layoutY="184.0" text=":">
+      <font>
+         <Font name="System Bold" size="18.0" />
+      </font>
+   </Label>
+   <Label layoutX="10.0" layoutY="189.0" text="Кінець" />
+   <Button layoutX="6.0" layoutY="38.0" mnemonicParsing="false" onAction="#selectQuiz" text="Обрати тестування..." />
+   <ListView fx:id="LV_questions" disable="true" layoutX="12.0" layoutY="258.0" prefHeight="115.0" prefWidth="362.0" />
+   <Label layoutX="11.0" layoutY="241.0" text="Питання" />
+   <TextField fx:id="TF_quizName" disable="true" layoutX="10.0" layoutY="126.0" prefHeight="25.0" prefWidth="368.0" />
+   <Line endX="388.0" endY="7.62939453125E-6" layoutY="70.0" stroke="GREY" />
+   <Button layoutX="138.0" layoutY="38.0" mnemonicParsing="false" onAction="#newQuiz" text="Нове тестування" />
+   <Button fx:id="button_deleteQuiz" disable="true" layoutX="249.0" layoutY="38.0" mnemonicParsing="false" onAction="#deleteQuiz" text="Видалити тестування" />
+   <Label layoutX="10.0" layoutY="71.0" text="Обрано тестування:" />
+   <Label layoutX="10.0" layoutY="109.0" text="Назва" />
+   <Button fx:id="button_saveQuiz" disable="true" layoutX="241.0" layoutY="427.0" mnemonicParsing="false" onAction="#saveQuiz" text="Зберегти тестування" />
+   <TextField fx:id="TF_timeToDo" disable="true" layoutX="221.0" layoutY="215.0" prefHeight="25.0" prefWidth="74.0" />
+   <Label layoutX="10.0" layoutY="219.0" prefHeight="17.0" prefWidth="187.0" text="Час на проходження (хвилини)" />
+   <Button fx:id="button_addQuestion" disable="true" layoutX="12.0" layoutY="394.0" mnemonicParsing="false" onAction="#addQuestion" text="Додати питання..." />
+   <Label fx:id="label_alertNoQuestionChange" layoutX="14.0" layoutY="374.0" text="Питання не можна змінювати для тестів з проходженнями" visible="false" />
+   <Button fx:id="button_removeQuestion" disable="true" layoutX="125.0" layoutY="394.0" mnemonicParsing="false" onAction="#removeQuestion" text="Видалити обране питання" />
+   <Line endX="388.0" endY="7.62939453125E-6" layoutY="423.0" stroke="GREY" />
+</Pane>

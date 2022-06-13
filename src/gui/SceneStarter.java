@@ -64,6 +64,10 @@ public class SceneStarter {
         startScene(actionEvent, "/gui/chooseQuiz/chooseQuizPane.fxml", "Обрати тестування");
     }
 
+    public static void startQuizManagerScene(ActionEvent actionEvent) {
+        startScene(actionEvent, "/gui/quizManager/quizManager.fxml", "Менеджер тестувань");
+    }
+
     public static void exit(ActionEvent actionEvent) {
         if (actionEvent != null) {
             ((Node)(actionEvent.getSource())).getScene().getWindow().hide();

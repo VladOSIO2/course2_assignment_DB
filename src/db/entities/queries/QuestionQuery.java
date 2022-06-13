@@ -136,4 +136,12 @@ public class QuestionQuery {
         insertQuestionAnswers(q);
         SimpleQuery.log("question#%d: updated values".formatted(q.getQuestionID()));
     }
+
+    public static Map<Integer, String> getQuestions(int quizID) throws SQLException {
+        String query = """
+                SELECT question_id, text FROM question_quiz
+                JOIN question USING (question_id)
+                WHERE quiz_id =""" + quizID;
+        return SimpleQuery.getIntegerStringMap(query, "question_id", "text");
+    }
 }

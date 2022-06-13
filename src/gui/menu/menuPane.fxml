@@ -9,9 +9,10 @@
    <Button layoutX="34.0" layoutY="49.0" mnemonicParsing="false" onAction="#getRegistrationScene" prefHeight="25.0" prefWidth="177.0" text="Зареєструвати користувача" />
    <Button layoutX="122.0" layoutY="2.0" mnemonicParsing="false" onAction="#logOut" prefHeight="25.0" prefWidth="113.0" text="Вихід з акаунту" />
    <Button layoutX="11.0" layoutY="2.0" mnemonicParsing="false" onAction="#exit" text="Вихід з додатку" />
-   <Button fx:id="button_questionManager" layoutX="33.0" layoutY="154.0" mnemonicParsing="false" onAction="#getQuestionManagerScene" prefHeight="25.0" prefWidth="177.0" text="Менеджер питань" />
+   <Button fx:id="button_questionManager" layoutX="33.0" layoutY="134.0" mnemonicParsing="false" onAction="#getQuestionManagerScene" prefHeight="25.0" prefWidth="177.0" text="Менеджер питань" />
    <Button fx:id="button_quizStats" layoutX="33.0" layoutY="229.0" mnemonicParsing="false" onAction="#getQuizStats" prefHeight="25.0" prefWidth="177.0" text="Статистика тестування" />
    <Button layoutX="34.0" layoutY="78.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="177.0" text="Пройти тестування" />
    <Button fx:id="button_logInfo" layoutX="33.0" layoutY="287.0" mnemonicParsing="false" onAction="#getLogInfo" prefHeight="25.0" prefWidth="177.0" text="Лог використання програми" />
    <Button fx:id="button_generalStats" layoutX="33.0" layoutY="258.0" mnemonicParsing="false" onAction="#getGeneralStats" prefHeight="25.0" prefWidth="177.0" text="Загальна статистика" />
+   <Button fx:id="button_quizManager" layoutX="33.0" layoutY="200.0" mnemonicParsing="false" onAction="#getQuizManagerScene" prefHeight="25.0" prefWidth="177.0" text="Менеджер тестувань" />
 </Pane>

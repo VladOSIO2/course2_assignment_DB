@@ -11,6 +11,7 @@ import java.sql.SQLException;
 
 public class MenuController {
 
+    @FXML private Button button_quizManager;
     @FXML private Button button_logInfo;
     @FXML private Button button_generalStats;
     @FXML private Button button_quizStats;
@@ -26,6 +27,7 @@ public class MenuController {
             button_logInfo.setVisible(false);
             button_generalStats.setVisible(false);
             button_quizStats.setVisible(false);
+            button_quizManager.setDisable(false);
             if (!DBSession.getType().equals(UserType.AUTHOR)) {
                 //not author & not admin
                 button_questionManager.setVisible(false);
@@ -58,6 +60,10 @@ public class MenuController {
         SceneStarter.startSceneGeneralStats(actionEvent);
     }
 
+    public void getQuizManagerScene(ActionEvent actionEvent) {
+        SceneStarter.startQuizManagerScene(actionEvent);
+    }
+
     @FXML
     private void logOut(ActionEvent actionEvent) throws SQLException {
         DBSession.logOut();
@@ -69,4 +75,5 @@ public class MenuController {
         DBSession.logOut();
         SceneStarter.exit(actionEvent);
     }
+
 }

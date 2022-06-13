@@ -68,7 +68,7 @@ public class QuestionManagerController {
     private Pair<Integer, String> selectedQuestion = new Pair<>(-1, "");
 
 
-    @FXML CheckBox check_suppressAlerts;
+    @FXML private CheckBox check_suppressAlerts;
     private boolean suppressAlerts = false;
 
     @FXML
@@ -376,5 +376,9 @@ public class QuestionManagerController {
     @FXML
     private void toggleSuppressAlerts() {
         suppressAlerts = check_suppressAlerts.isSelected();
+    }
+
+    public Pair<Integer, String> getSelectedQuestion() {
+        return selectedQuestion;
     }
 }
