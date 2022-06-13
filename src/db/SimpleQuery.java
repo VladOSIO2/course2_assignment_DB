@@ -96,4 +96,19 @@ public class SimpleQuery {
         st.close();
         return value;
     }
+
+    public static List<Integer> getIntegerList(String query, String... colNames) throws SQLException {
+        List<Integer> values = new ArrayList<>();
+        Connection con = DBConnector.getInstance().getConnection();
+        Statement st = con.createStatement();
+        ResultSet rs = st.executeQuery(query);
+        while (rs.next()) {
+            for (String colName : colNames) {
+                values.add(rs.getInt(colName));
+            }
+        }
+        rs.close();
+        st.close();
+        return values;
+    }
 }

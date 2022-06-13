@@ -13,11 +13,19 @@ public class GradeQuery {
         return SimpleQuery.getIntegerStringMap(query, "grade_id", "name");
     }
 
-    public static String getGradeByQuestion(int questionID) throws SQLException {
+    public static String getGrade(int questionID) throws SQLException {
         String query = """
                 SELECT grade.name AS g_name FROM question
                 JOIN grade USING (grade_id)
                 WHERE question_id =""" + questionID;
         return SimpleQuery.getString(query, "g_name");
+    }
+
+    public static int getGradePoints(int questionID) throws SQLException {
+        String query = """
+                SELECT points FROM question
+                JOIN grade USING (grade_id)
+                WHERE question_id =""" + questionID;
+        return SimpleQuery.getInt(query, "points");
     }
 }

@@ -160,8 +160,7 @@ public class QuizQuery {
                 AND name = '%s'
                 """.formatted(dateStart, dateEnd, timeToDo, name);
 
-        Set<Integer> set = SimpleQuery.getIntegerStringMap(
-                queryQuizID, "quiz_id", "quiz_id").keySet();
+        List<Integer> set = SimpleQuery.getIntegerList(queryQuizID, "quiz_id");
         int quizID;
         if (set.size() == 1) {
             quizID = (Integer) set.toArray()[0];
@@ -204,5 +203,29 @@ public class QuizQuery {
         }
         SimpleQuery.log("quiz#%d: added %d questions"
                 .formatted(quizID, questions.size()));
+    }
+
+    public static List<Integer> getQuestionIDs(int quizID) throws SQLException {
+        String query = """
+                SELECT question_id FROM question_quiz
+                WHERE quiz_id =""" + quizID;
+        return SimpleQuery.getIntegerList(query, "question_id");
+    }
+
+    public static String insertQuizCompletion(
+            int quizID, int responderID, int mark, String dtStart, String dtEnd) {
+        String query = """
+                    INSERT INTO quiz_completion(quiz_id, responder_id,
+                                                mark, dt_start, dt_end)
+                    VALUE (%d, %d, %d, '%s', '%s')
+                    """.formatted(quizID, responderID, mark, dtStart, dtEnd);
+        try {
+            SimpleQuery.execute(query);
+            SimpleQuery.log("quiz_completion: inserted for r%d on q%d with mark%d"
+                    .formatted(responderID, quizID, mark));
+            return "Проходження тесту збережено!";
+        } catch (SQLException e) {
+            return "Помилка SQL:\n" + e.getMessage();
+        }
     }
 }

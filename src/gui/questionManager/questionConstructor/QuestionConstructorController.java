@@ -205,7 +205,7 @@ public class QuestionConstructorController {
             chB_theme.setValue(ThemeQuery.getThemeByQuestion(questionID));
             TF_q.setText(QuestionQuery.getQuestionText(questionID));
             authorID = AuthorQuery.getAuthorIDByQuestion(questionID);
-            chB_grade.setValue(GradeQuery.getGradeByQuestion(questionID));
+            chB_grade.setValue(GradeQuery.getGrade(questionID));
             answers = AnswerQuery.getAnswers(questionID);
             rightAnswer = AnswerQuery.getRightAnswer(questionID);
 //            drawing answers

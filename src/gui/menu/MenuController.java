@@ -76,4 +76,7 @@ public class MenuController {
         SceneStarter.exit(actionEvent);
     }
 
+    public void getQuizCompletionScene(ActionEvent actionEvent) {
+        SceneStarter.startSceneQuizCompletionScene(actionEvent);
+    }
 }
