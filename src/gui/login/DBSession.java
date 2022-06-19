@@ -11,6 +11,7 @@ import java.sql.Statement;
 
 public class DBSession {
     private static UserType type = null;
+    private static int userID = 0;
 
     static boolean init(String userLogin, String userPassword) throws SQLException {
         boolean isInitialized = false;
@@ -27,6 +28,7 @@ public class DBSession {
         ResultSet rs = st.executeQuery(query);
         if (rs.next()) {
             type = UserType.valueOf(rs.getString("name"));
+            userID = rs.getInt("user_id");
             SimpleQuery.log("user logged in");
             isInitialized = true;
         }
@@ -40,13 +42,14 @@ public class DBSession {
     }
 
     public static int getId() {
-        return type == null ? 0 : type.getId();
+        return userID;
     }
 
     public static void logOut() throws SQLException {
         if (type != null) {
             SimpleQuery.log("user logged out");
             type = null;
+            userID = 0;
         }
     }
 }

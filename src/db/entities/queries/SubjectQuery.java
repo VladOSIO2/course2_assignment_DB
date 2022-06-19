@@ -86,9 +86,12 @@ public class SubjectQuery {
     }
 
     public static String getSubjectByTheme(int themeID) throws SQLException {
-        int subjectID = SimpleQuery.getInt(
+        Integer subjectID = SimpleQuery.getInt(
                 "SELECT subject_id FROM theme WHERE theme_id = " + themeID,
                 "subject_id");
+        if (subjectID == null) {
+            return "";
+        }
         return SubjectQuery.getSubjectByID(subjectID);
     }
 

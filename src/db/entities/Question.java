@@ -1,18 +1,15 @@
 package db.entities;
 
-import javafx.util.Pair;
-
 import java.util.List;
-import java.util.Map;
 
 public class Question {
     private int questionID;
-    private int authorID;
-    private int themeID;
-    private int gradeID;
+    private final int authorID;
+    private final int themeID;
+    private final int gradeID;
     private String text;
-    private List<String> answers;
-    private String rightAnswer;
+    private final List<String> answers;
+    private final String rightAnswer;
 
     public Question(
             int questionID, int authorID, int themeID, int gradeID,
@@ -38,24 +35,12 @@ public class Question {
         return authorID;
     }
 
-    public void setAuthorID(int authorID) {
-        this.authorID = authorID;
-    }
-
     public int getThemeID() {
         return themeID;
     }
 
-    public void setThemeID(int themeID) {
-        this.themeID = themeID;
-    }
-
     public int getGradeID() {
         return gradeID;
-    }
-
-    public void setGradeID(int gradeID) {
-        this.gradeID = gradeID;
     }
 
     public String getText() {
@@ -70,15 +55,8 @@ public class Question {
         return answers;
     }
 
-    public void setAnswers(List<String> answers) {
-        this.answers = answers;
-    }
-
     public String getRightAnswer() {
         return rightAnswer;
     }
 
-    public void setRightAnswer(String rightAnswer) {
-        this.rightAnswer = rightAnswer;
-    }
 }

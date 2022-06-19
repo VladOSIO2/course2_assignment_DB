@@ -96,7 +96,7 @@ public class QuizStatsController {
     @FXML
     private void getResponderAmount() throws SQLException {
         int key = selectedQuiz.getKey();
-        int amount = 0;
+        int amount;
         if (!check_onlyForMarks.isSelected()) {
             amount = QuizQuery.getResponderCount(key);
         } else {

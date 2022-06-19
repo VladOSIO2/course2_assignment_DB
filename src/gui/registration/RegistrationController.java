@@ -86,7 +86,7 @@ public class RegistrationController {
         String patronymic = TF_patronymic.getText();
         String passwordEncrypted = SHA256Encryptor.encrypt(password);
         UserQuery.insertUser(name, surname, patronymic,
-                login, passwordEncrypted, DBSession.getType());
+                login, passwordEncrypted, UserType.valueOf(chB_userType.getValue()));
     }
 
     @FXML

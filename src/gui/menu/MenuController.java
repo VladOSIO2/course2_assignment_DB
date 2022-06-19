@@ -27,7 +27,7 @@ public class MenuController {
             button_logInfo.setVisible(false);
             button_generalStats.setVisible(false);
             button_quizStats.setVisible(false);
-            button_quizManager.setDisable(false);
+            button_quizManager.setVisible(false);
             if (!DBSession.getType().equals(UserType.AUTHOR)) {
                 //not author & not admin
                 button_questionManager.setVisible(false);

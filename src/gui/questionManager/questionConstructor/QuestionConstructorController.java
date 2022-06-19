@@ -190,8 +190,7 @@ public class QuestionConstructorController {
     }
 
     @FXML
-    private void exit(ActionEvent actionEvent) throws SQLException {
-        DBSession.logOut();
+    private void exit(ActionEvent actionEvent) {
         SceneStarter.exit(actionEvent);
     }
 

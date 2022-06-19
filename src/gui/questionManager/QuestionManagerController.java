@@ -78,6 +78,8 @@ public class QuestionManagerController {
             button_addTheme.setVisible(false);
             button_deleteSubject.setVisible(false);
             button_deleteTheme.setVisible(false);
+            button_updateSubject.setVisible(false);
+            button_updateTheme.setVisible(false);
         }
 
 //        Subjects
@@ -270,11 +272,22 @@ public class QuestionManagerController {
     }
 
     @FXML
-    private void deleteQuestion() {
+    private void deleteQuestion() throws SQLException {
         if (suppressAlerts || GUIUtil.showConfirmationAlert(
                 "Видалити питання?",
                 Util.splitStringOnLines("Видалити питання: " + selectedQuestion.getValue() + "?", 35))) {
-            String res = QuestionQuery.deleteQuestion(selectedQuestion.getKey());
+            String res;
+            if (!DBSession.getType().equals(UserType.ADMIN)) {
+                int currentAuthorID = AuthorQuery.getUserAsAuthor(DBSession.getId());
+                int selectedAuthorID = AuthorQuery.getAuthorIDByQuestion(selectedQuestion.getKey());
+                if (currentAuthorID == selectedAuthorID) {
+                    res = QuestionQuery.deleteQuestion(selectedQuestion.getKey());
+                } else {
+                    res = "Помилка: Ви не можете видалити питання іншого автора!";
+                }
+            } else {
+                res = QuestionQuery.deleteQuestion(selectedQuestion.getKey());
+            }
             if (res.contains("Помилка")) {
                 GUIUtil.showErrorAlert(res);
             } else {
@@ -288,8 +301,15 @@ public class QuestionManagerController {
 
     @FXML
     private void updateQuestion() throws SQLException, IOException {
-        startQuestionConstructor(selectedQuestion.getKey());
-        fillQuestions();
+        int currentAuthorID = AuthorQuery.getUserAsAuthor(DBSession.getId());
+        int selectedAuthorID = AuthorQuery.getAuthorIDByQuestion(selectedQuestion.getKey());
+        if (DBSession.getType().equals(UserType.ADMIN) ||
+                currentAuthorID == selectedAuthorID) {
+            startQuestionConstructor(selectedQuestion.getKey());
+            fillQuestions();
+        } else {
+            GUIUtil.showErrorAlert("Помилка: Ви не можете змінювати питання іншого автора!");
+        }
     }
 
     private void startQuestionConstructor(int questionID) throws IOException, SQLException {

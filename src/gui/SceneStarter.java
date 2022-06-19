@@ -49,7 +49,7 @@ public class SceneStarter {
     }
 
     public static void startSceneQuizStats(ActionEvent actionEvent) {
-        startScene(actionEvent, "/gui/quizStats/quizStatsPane.fxml", "Статистика питань");
+        startScene(actionEvent, "/gui/quizStats/quizStatsPane.fxml", "Статистика тестування");
     }
 
     public static void startSceneLogs(ActionEvent actionEvent) {
@@ -60,6 +60,7 @@ public class SceneStarter {
         startScene(actionEvent, "/gui/generalStats/generalStatsPane.fxml", "Загальна статистика");
     }
 
+    //TODO
     public static void startSceneChooseQuestion(ActionEvent actionEvent) {
         startScene(actionEvent, "/gui/chooseQuiz/chooseQuizPane.fxml", "Обрати тестування");
     }

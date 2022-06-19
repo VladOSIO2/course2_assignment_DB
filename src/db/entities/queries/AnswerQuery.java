@@ -27,23 +27,6 @@ public class AnswerQuery {
         return id;
     }
 
-    public static void deleteAnswerIfNotUsed(int answerID) throws SQLException {
-        String queryUsed = """
-                SELECT question_id FROM question_answer
-                WHERE answer_id =""" + answerID;
-        boolean isUsed = SimpleQuery.exists(queryUsed);
-        if (!isUsed) {
-            String answerText = SimpleQuery.getString(
-                    "SELECT text FROM answer WHERE answer_id = " + answerID,
-                    "text");
-            String query = """
-                DELETE FROM answer
-                WHERE answer_id =""" + answerID;
-            SimpleQuery.execute(query);
-            SimpleQuery.log("deleted answer: " + answerText);
-        }
-    }
-
     public static List<String> getAnswers(int questionID) throws SQLException {
         String query = """
                 SELECT text FROM question_answer

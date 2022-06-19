@@ -16,10 +16,8 @@ import java.util.Map;
 
 public class GeneralStatsController {
 
-    //TODO: control buttons
-
     @FXML
-    private void showMostValuableAuthor(ActionEvent actionEvent) throws SQLException {
+    private void showMostValuableAuthor() throws SQLException {
         Integer count = AuthorQuery.getMaxQuestionAuthorCount();
         List<String> names = AuthorQuery.getMaxQuestionAuthorNames();
         String info = "Максимальна кількість питань в автора: " +
@@ -32,14 +30,14 @@ public class GeneralStatsController {
     @FXML
     private void showAndUpdateTest() throws SQLException {
         Map<Integer, String> mapQuiz = QuizQuery.updateAndGetMostPopularQuizzes();
-        StringBuilder sb = new StringBuilder("Оновлено інформацію про найбільш популярні питання\n");
+        StringBuilder sb = new StringBuilder("Оновлено інформацію про найбільш популярні тестування\n");
         if (mapQuiz.size() == 1) {
-            sb.append("Найбільш популярне питання на даний момент:\n");
+            sb.append("Найбільш популярне тестування на даний момент:\n");
         } else {
-            sb.append("Найбільш популярні питання на даний момент:\n");
+            sb.append("Найбільш популярні тестування на даний момент:\n");
         }
         mapQuiz.forEach((k, v) -> sb.append(k).append(" : ").append(v));
-        GUIUtil.showInfoAlert("Найбільш популярні питання", sb.toString());
+        GUIUtil.showInfoAlert("Найбільш популярні тестування", sb.toString());
     }
 
     @FXML
